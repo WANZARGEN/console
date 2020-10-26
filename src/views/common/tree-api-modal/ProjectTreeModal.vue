@@ -65,9 +65,9 @@ import { makeProxy } from '@/components/util/composition-helpers';
 import PI from '@/components/atoms/icons/PI.vue';
 import PButtonModal from '@/components/organisms/modals/button-modal/PButtonModal.vue';
 import { ProjectNodeState, ProjectTreeFluentAPI } from '@/lib/api/tree-node';
-import PTreeNode from '@/components/molecules/tree/PTreeNode.vue';
+import PTreeNode from '@/components/molecules/tree-node/PTreeNode.vue';
 import { fluentApi } from '@/lib/fluent-api';
-import { TreeItem } from '@/components/molecules/tree/PTreeNode.toolset';
+import { TreeItem } from '@/components/molecules/tree-node/PTreeNode.toolset';
 import { ProjectItemResp } from '@/lib/fluent-api/identity/project';
 import PRadio from '@/components/molecules/forms/radio/PRadio.vue';
 

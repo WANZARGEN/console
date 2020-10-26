@@ -539,7 +539,7 @@ export abstract class TreeAction<parameter, resp> extends ActionAPI<parameter, r
 }
 
 export abstract class TreeSearchAction<parameter, resp> extends TreeAction<parameter, resp> {
-    protected path = 'tree/search';
+    protected path = 'tree-node/search';
 }
 
 export abstract class GetAction<parameter, resp> extends SingleItemAction<parameter, resp> {

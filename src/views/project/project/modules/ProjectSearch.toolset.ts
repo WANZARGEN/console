@@ -1,4 +1,4 @@
-import { TreeItem } from '@/components/molecules/tree/PTreeNode.toolset';
+import { TreeItem } from '@/components/molecules/tree-node/PTreeNode.toolset';
 import { ProjectItemResp } from '@/lib/fluent-api/identity/project';
 import { ProjectNodeState } from '@/lib/api/tree-node';
 

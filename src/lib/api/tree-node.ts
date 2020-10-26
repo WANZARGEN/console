@@ -5,7 +5,7 @@ import {
     TreeNodeToolSet,
     getDefaultNode,
     BaseNodeStateType, TreeNodeProps, TreeItem, TreeNode, getTreeItem,
-} from '@/components/molecules/tree/PTreeNode.toolset';
+} from '@/components/molecules/tree-node/PTreeNode.toolset';
 import { TreeResp, TreeSearchAction } from '@/lib/fluent-api';
 import {
     ProjectItemResp, ProjectTree, ProjectTreeParameter, TreeSearchResp,

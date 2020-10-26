@@ -10,16 +10,8 @@
                 />
             </template>
         </p-tree-node>
-        <p-tree-node v-for="(node, idx) in treeApiHandler.ts.metaState.nodes" :key="idx"
-                     v-bind="treeApiHandler.ts.state"
-                     :data.sync="node.data"
-                     :children.sync="node.children"
-                     :state.sync="node.state"
-                     @toggle:click="treeApiHandler.toggle"
-                     @node:click="onNodeClick"
-                     @row:mouseenter="onHoverItem(...arguments, true)"
-                     @row:mouseleave="onHoverItem(...arguments, false)"
-        >
+
+        <p-tree :fetcher="treeFetcher">
             <template #data="{data}">
                 {{ data.name }}
             </template>
@@ -35,25 +27,58 @@
             </template>
             <template #right-extra="{data}">
                 <div v-if="hoveredNode && data.id === hoveredNode.node.data.id">
-                    <!--                    <div v-tooltip.top="{content: $t('TREE_TYPE.CREATE_GRP'), delay: {show: 500}}"-->
-                    <!--                         class="float-right text-base truncate leading-tight"-->
-                    <!--                    >-->
-                    <p-icon-button :name="'ic_plus'" class="group-add-btn"
+                    <p-icon-button name="ic_plus" class="group-add-btn"
                                    width="1rem" height="1rem"
                                    @click.stop="$emit('create', hoveredNode)"
                     />
-                    <!--                    </div>-->
                 </div>
             </template>
-        </p-tree-node>
+        </p-tree>
+
+        <!--        <p-tree-node v-for="(node, idx) in treeApiHandler.ts.metaState.nodes" :key="idx"-->
+        <!--                     v-bind="treeApiHandler.ts.state"-->
+        <!--                     :data.sync="node.data"-->
+        <!--                     :children.sync="node.children"-->
+        <!--                     :state.sync="node.state"-->
+        <!--                     @toggle:click="treeApiHandler.toggle"-->
+        <!--                     @node:click="onNodeClick"-->
+        <!--                     @row:mouseenter="onHoverItem(...arguments, true)"-->
+        <!--                     @row:mouseleave="onHoverItem(...arguments, false)"-->
+        <!--        >-->
+        <!--            <template #data="{data}">-->
+        <!--                {{ data.name }}-->
+        <!--            </template>-->
+        <!--            <template #toggle="{state, toggleSize}">-->
+        <!--                <p-i v-if="state.loading" name="ic_working" :width="toggleSize"-->
+        <!--                     :height="toggleSize"-->
+        <!--                />-->
+        <!--            </template>-->
+        <!--            <template #toggle-right>-->
+        <!--                <p-i name="ic_tree_project-group" class="project-group-icon"-->
+        <!--                     width="1rem" height="1rem" color="inherit transparent"-->
+        <!--                />-->
+        <!--            </template>-->
+        <!--            <template #right-extra="{data}">-->
+        <!--                <div v-if="hoveredNode && data.id === hoveredNode.node.data.id">-->
+        <!--                    &lt;!&ndash;                    <div v-tooltip.top="{content: $t('TREE_TYPE.CREATE_GRP'), delay: {show: 500}}"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                         class="float-right text-base truncate leading-tight"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                    >&ndash;&gt;-->
+        <!--                    <p-icon-button :name="'ic_plus'" class="group-add-btn"-->
+        <!--                                   width="1rem" height="1rem"-->
+        <!--                                   @click.stop="$emit('create', hoveredNode)"-->
+        <!--                    />-->
+        <!--                    &lt;!&ndash;                    </div>&ndash;&gt;-->
+        <!--                </div>-->
+        <!--            </template>-->
+        <!--        </p-tree-node>-->
     </div>
 </template>
 
 <script lang="ts">
 
-import PTreeNode from '@/components/molecules/tree/PTreeNode.vue';
+import PTreeNode from '@/components/molecules/tree-node/PTreeNode.vue';
 import PI from '@/components/atoms/icons/PI.vue';
-import { getBaseNodeState, getDefaultNode } from '@/components/molecules/tree/PTreeNode.toolset';
+import { getBaseNodeState, getDefaultNode } from '@/components/molecules/tree-node/PTreeNode.toolset';
 import { ProjectItemResp } from '@/lib/fluent-api/identity/project';
 import { ProjectTreeFluentAPI } from '@/lib/api/tree-node';
 import {
@@ -62,11 +87,16 @@ import {
 import { fluentApi } from '@/lib/fluent-api';
 import PIconButton from '@/components/molecules/buttons/icon-button/PIconButton.vue';
 import { ProjectGroup, ProjectTreeItem } from '@/views/project/project/modules/ProjectSearch.toolset';
+import PTree from '@/components/organisms/tree/PTree.vue';
+import { TreeNode } from '@/components/molecules/tree-node/type';
+import {SpaceConnector} from "@/lib/space-connector";
 
 
 export default {
     name: 'ProjectGroupTree',
-    components: { PIconButton, PI, PTreeNode },
+    components: {
+        PTree, PIconButton, PI, PTreeNode,
+    },
     setup(props, { emit }) {
         const projectAPI = fluentApi.identity().project();
         const treeAction = projectAPI.tree()
@@ -177,6 +207,10 @@ export default {
         listNodes();
 
 
+        const treeFetcher = async (node: TreeNode) => {
+            const res = await SpaceConnector.client.identity.project.tree();
+            return res;
+        };
         return {
             treeApiHandler,
             ...toRefs(state),
@@ -188,6 +222,7 @@ export default {
             addNode,
             findNode,
             listNodes,
+            treeFetcher,
         };
     },
 };

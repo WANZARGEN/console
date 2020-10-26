@@ -717,7 +717,7 @@ export default {
             }
             state.searchedProjectGroup = projectGroup;
 
-            // init tree nodes
+            // init tree-node nodes
             if (projectGroup) await state.treeRef.findNode(projectGroup.id);
             else await state.treeRef.listNodes();
 

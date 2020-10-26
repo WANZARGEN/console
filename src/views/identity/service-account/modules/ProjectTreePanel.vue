@@ -92,7 +92,7 @@ import {
 } from '@vue/composition-api';
 import PI from '@/components/atoms/icons/PI.vue';
 import { ProjectNodeState, ProjectTreeFluentAPI } from '@/lib/api/tree-node';
-import PTreeNode from '@/components/molecules/tree/PTreeNode.vue';
+import PTreeNode from '@/components/molecules/tree-node/PTreeNode.vue';
 import { fluentApi } from '@/lib/fluent-api';
 import PPaneLayout from '@/components/molecules/layouts/pane-layout/PPaneLayout.vue';
 import { PROJECT_MAIN_PAGE_NAME } from '@/routes/project/project-route';
@@ -100,7 +100,7 @@ import PSkeleton from '@/components/atoms/skeletons/PSkeleton.vue';
 import PIconButton from '@/components/molecules/buttons/icon-button/PIconButton.vue';
 import PIconTextButton from '@/components/molecules/buttons/icon-text-button/PIconTextButton.vue';
 import PRadio from '@/components/molecules/forms/radio/PRadio.vue';
-import { TreeItem } from '@/components/molecules/tree/PTreeNode.toolset';
+import { TreeItem } from '@/components/molecules/tree-node/PTreeNode.toolset';
 import { ProjectItemResp } from '@/lib/fluent-api/identity/project';
 
 export default {
