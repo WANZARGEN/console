@@ -1,5 +1,3 @@
-const Plugin = () => import('@/views/plugin/plugin');
-
 const Collector = () => import('@/views/plugin/collector/pages/Collector.vue');
 
 const CollectorPlugins = () => import('@/views/plugin/collector/pages/CollectorPlugins.vue');
@@ -10,9 +8,7 @@ export default {
     name: 'plugin',
     redirect: '/plugin/collector',
     meta: { label: 'Plugin' },
-    components: {
-        main: Plugin,
-    },
+    component: { template: '<router-view />' },
     children: [
         {
             path: 'collector',

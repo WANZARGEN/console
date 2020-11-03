@@ -1,5 +1,5 @@
 <template>
-    <general-page-layout class="collector-creator-page">
+    <general-page-layout class="collector-creator-container">
         <div class="page-navigation">
             <p-page-navigation :routes="routes" />
         </div>
@@ -20,7 +20,7 @@
                            @changeStep="onChangeStep"
         >
             <template #contents-conf="{tab}">
-                <div class="collector-input-lap">
+                <div class="collector-input-wrapper">
                     <p-lazy-img class="flex-shrink-0 mr-8"
                                 :loading="!imageUrl"
                                 :src="imageUrl"
@@ -71,7 +71,7 @@ import {
     reactive, toRefs, computed, getCurrentInstance, ComponentRenderProxy,
 } from '@vue/composition-api';
 
-import GeneralPageLayout from '@/views/containers/page-layout/GeneralPageLayout.vue';
+import GeneralPageLayout from '@/views/common/page-layout/GeneralPageLayout.vue';
 import ConfirmCredentials from '@/views/plugin/collector/modules/ConfirmCredentials.vue';
 import PProgressWizard from '@/components/organisms/wizards/progress-wizard/PProgressWizard.vue';
 import PDictInputGroup from '@/components/organisms/forms/dict-input-group/PDictInputGroup.vue';
@@ -294,9 +294,9 @@ export default {
 };
 </script>
 
-<style lang="postcss">
-.collector-creator-page {
-    .collector-input-lap {
+<style lang="postcss" scoped>
+.collector-creator-container {
+    .collector-input-wrapper {
         @apply flex border-r border-gray-200;
         width: 50%;
         padding: 2.5rem;

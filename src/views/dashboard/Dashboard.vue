@@ -28,7 +28,6 @@
         <collectors class="col-start-1 col-end-13" />
         <cloud-services class="col-start-1 col-end-13"
                         :more-info="true"
-                        :get-action="cloudServiceWidgetGetAction"
         />
     </general-page-layout>
 </template>
@@ -43,10 +42,9 @@ import DailyUpdates from '@/views/common/widgets/daily-updates/DailyUpdates.vue'
 import ServiceAccounts from '@/views/common/widgets/service-accounts/ServiceAccounts.vue';
 import ServiceSummary from '@/views/common/widgets/service-summary/ServiceSummary.vue';
 import TopProjects from '@/views/common/widgets/top-projects/TopProjects.vue';
-import GeneralPageLayout from '@/views/containers/page-layout/GeneralPageLayout.vue';
+import GeneralPageLayout from '@/views/common/page-layout/GeneralPageLayout.vue';
 import Collectors from '@/views/common/widgets/collectors/Collectors.vue';
 
-import { Stat } from '@/lib/fluent-api/statistics/resource';
 import { blue, secondary, secondary1 } from '@/styles/colors';
 
 
@@ -101,11 +99,6 @@ export default {
             serverSummaryState,
             cloudServiceSummaryState,
             topics,
-            cloudServiceWidgetGetAction(apiAction: Stat) {
-                return apiAction
-                    .setFilter({ key: 'tags.spaceone:is_major', value: 'true', operator: '=' })
-                    .setLimit(12);
-            },
         };
     },
 };
