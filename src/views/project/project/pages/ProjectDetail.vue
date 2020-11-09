@@ -13,7 +13,7 @@
             />
         </div>
         <p class="copy-project-id">
-            <b>Project ID:</b> {{ projectId }}
+            <b>{{ $t('PROJECT.DETAIL.PROJECT_ID') }}</b> {{ projectId }}
             <p-copy-button class="ml-2"
                            :value="projectId"
             />
@@ -38,14 +38,14 @@
                                 @change="onChangeMemberTable"
                 >
                     <template #toolbox-top>
-                        <p-panel-top :title="'Member'" use-total-count :total-count="memberTableState.totalCount" />
+                        <p-panel-top :title="$t('PROJECT.DETAIL.MEMBER_TITLE')" use-total-count :total-count="memberTableState.totalCount" />
                     </template>
                     <template #toolbox-left>
                         <p-icon-text-button style-type="primary-dark" class="mr-4 add-btn"
                                             name="ic_plus_bold"
                                             @click="openMemberAddForm()"
                         >
-                            {{ $t('BTN.ADD') }}
+                            {{ $t('PROJECT.DETAIL.ADD') }}
                         </p-icon-text-button>
                         <p-button class="mr-4"
                                   :outline="true"
@@ -53,7 +53,7 @@
                                   :disabled="!memberTableState.selectedItems.length"
                                   @click="memberDeleteClick"
                         >
-                            Delete
+                            {{ $t('PROJECT.DETAIL.DELETE') }}
                         </p-button>
                     </template>
                 </p-search-table>
@@ -112,7 +112,7 @@ import {
 } from '@vue/composition-api';
 
 import GeneralPageLayout from '@/views/common/page-layout/GeneralPageLayout.vue';
-import STagsPanel from '@/views/common/tags/tag-panel/TagsPanel.vue';
+import STagsPanel from '@/views/common/tags/TagsPanel.vue';
 import SProjectCreateFormModal from '@/views/project/project/modules/ProjectCreateFormModal.vue';
 import SProjectMemberAddModal from '@/views/project/project/modules/ProjectMemberAddModal.vue';
 import ProjectDashboard from '@/views/project/project/pages/ProjectDashboard.vue';
@@ -136,6 +136,8 @@ import { Options, SearchTableListeners } from '@/components/organisms/tables/sea
 import { QueryHelper, SpaceConnector } from '@/lib/space-connector';
 import { getPageStart } from '@/lib/component-utils/pagination';
 import { ProjectModel } from '@/views/project/project/type';
+import { TranslateResult } from 'vue-i18n';
+import { TabItem } from '@/components/organisms/tabs/tab/type';
 
 export default {
     name: 'ProjectDetail',
@@ -195,15 +197,16 @@ export default {
         /** Tabs */
         const singleItemTabState = reactive({
             tabs: computed(() => {
-                const items: any[] = [
-                    ['summary', 'COMMON.SUMMARY', { keepAlive: true }],
-                    ['member', 'COMMON.MEMBER'],
-                    ['tag', 'TAB.TAG'],
+                const items: TabItem[] = [
+                    { name: 'summary', label: vm.$t('PROJECT.DETAIL.TAB_SUMMARY'), keepAlive: true },
+                    { name: 'member', label: vm.$t('PROJECT.DETAIL.TAB_MEMBER') },
+                    { name: 'tag', label: vm.$t('PROJECT.DETAIL.TAB_TAG') },
                 ];
+
                 if (state.reportState) {
-                    items.push(['report', 'TAB.REPORT', { beta: true }]);
+                    items.push({ name: 'report', label: vm.$t('PROJECT.DETAIL.TAB_REPORT'), beta: true } as TabItem);
                 }
-                return makeTrItems(items, parent);
+                return items;
             }),
             activeTab: 'summary',
         });
@@ -278,18 +281,18 @@ export default {
             projectDeleteFormVisible: false,
             projectEditFormVisible: false,
             updateMode: false,
-            headerTitle: '',
+            headerTitle: '' as TranslateResult,
             themeColor: '',
-            modalContent: '',
+            modalContent: '' as TranslateResult,
             memberAddFormVisible: false,
             memberDeleteFormVisible: false,
         });
 
         const openProjectDeleteForm = () => {
             formState.projectDeleteFormVisible = true;
-            formState.headerTitle = 'Delete Project';
+            formState.headerTitle = vm.$t('PROJECT.DETAIL.MODAL_DELETE_PROJECT_TITLE');
             formState.themeColor = 'alert';
-            formState.modalContent = 'Are you sure you want to delete this Project?';
+            formState.modalContent = vm.$t('PROJECT.DETAIL.MODAL_DELETE_PROJECT_CONTENT');
         };
 
         const projectDeleteFormConfirm = async () => {
@@ -297,9 +300,9 @@ export default {
                 await SpaceConnector.client.identity.project.delete({
                     project_id: projectId.value,
                 });
-                showSuccessMessage('success', 'Delete Project', root);
+                showSuccessMessage(vm.$t('PROJECT.DETAIL.ALT_S_DELETE_PROJECT'), '', root);
             } catch (e) {
-                showErrorMessage('Delete Project Fail', e, root);
+                showErrorMessage(vm.$t('PROJECT.DETAIL.ALT_E_DELETE_PROJECT'), e, root);
             } finally {
                 formState.projectDeleteFormVisible = false;
                 vm.$router.go(-1);
@@ -317,10 +320,10 @@ export default {
                     project_id: projectId.value,
                     ...input,
                 });
-                showSuccessMessage('success', 'Update Project', root);
+                showSuccessMessage(vm.$t('PROJECT.DETAIL.ALT_S_UPDATE_PROJECT'), '', root);
                 item.value.name = input.name;
             } catch (e) {
-                showErrorMessage('Update Project Fail', e, root);
+                showErrorMessage(vm.$t('PROJECT.DETAIL.ALT_E_UPDATE_PROJECT'), e, root);
             } finally {
                 formState.projectEditFormVisible = false;
             }
@@ -434,56 +437,56 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-    .p-page-title {
-        &::v-deep .title {
-             @apply text-2xl;
-         }
-        &::v-deep .extra {
-             @apply text-base text-gray-400 mt-1;
-         }
+.p-page-title {
+    &::v-deep .title {
+        @apply text-2xl;
     }
-    .p-tab {
-        &::v-deep {
-                .p-tab-bar {
-                    border-color: #f8f8fc;
-                }
-                .tab-pane {
-                    @apply pb-0;
-                }
-            }
+    &::v-deep .extra {
+        @apply text-base text-gray-400 mt-1;
+    }
+}
+.p-tab {
+    &::v-deep {
+        .p-tab-bar {
+            border-color: #f8f8fc;
         }
-
-    .tab-content {
-        border: none;
-    }
-
-    .copy-project-id {
-        @apply float-right text-gray-500 -my-6;
-        font-size: 0.875rem;
-    }
-
-    .delete-btn {
-        @apply ml-3 cursor-pointer;
-    }
-
-    .tab-bg {
-        @apply bg-white border border-gray-200 rounded-sm pb-8;
-    }
-
-    .member-tab {
-        @apply border border-gray-200;
-        >>> &.p-toolbox-table .toolbox {
-            @apply pt-0;
-        }
-        .p-panel-top {
-            @apply ml-0;
+        .tab-pane {
+            @apply pb-0;
         }
     }
+}
 
-    .toolbox-left {
-        @apply w-full flex pr-4 ;
-        .p-search {
-            @apply w-full;
-        }
+.tab-content {
+    border: none;
+}
+
+.copy-project-id {
+    @apply float-right text-gray-500 -my-6;
+    font-size: 0.875rem;
+}
+
+.delete-btn {
+    @apply ml-3 cursor-pointer;
+}
+
+.tab-bg {
+    @apply bg-white border border-gray-200 rounded-sm pb-8;
+}
+
+.member-tab {
+    @apply border border-gray-200;
+    >>> &.p-toolbox-table .toolbox {
+        @apply pt-0;
     }
+    .p-panel-top {
+        @apply ml-0;
+    }
+}
+
+.toolbox-left {
+    @apply w-full flex pr-4 ;
+    .p-search {
+        @apply w-full;
+    }
+}
 </style>

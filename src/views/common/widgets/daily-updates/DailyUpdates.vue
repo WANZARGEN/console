@@ -1,7 +1,7 @@
 <template>
-    <p-widget-layout ref="widgetRef" class="daily-updates" title="Daily Updates"
-                     sub-title="00:00 ~ present (Local time)"
-                     :help="$t('DASHBOARD.ACTION.DAILY_UPDATES')"
+    <p-widget-layout ref="widgetRef" class="daily-updates" :title="$t('COMMON.WIDGETS.DAILY_UPDATE_TITLE')"
+                     :sub-title="$t('COMMON.WIDGETS.DAILY_UPDATE_DESC')"
+                     :help="$t('COMMON.WIDGETS.DAILY_UPDATE_HELP')"
     >
         <template #default>
             <div v-if="loading" class="mr-10 flex items-center overflow-hidden">
@@ -44,21 +44,21 @@
                                 </div>
                                 <p v-if="item.created_count && item.deleted_count" class="state">
                                     <router-link :to="item.createdHref">
-                                        Created <span class="created-count">{{ item.created_count || 0 }}</span>
+                                        {{ $t('COMMON.WIDGETS.DAILY_UPDATE_CREATED') }} <span class="created-count">{{ item.created_count || 0 }}</span>
                                     </router-link>
                                     <span class="divider">|</span>
                                     <router-link :to="item.deletedHref">
-                                        Deleted <span class="deleted-count">{{ item.deleted_count || 0 }}</span>
+                                        {{ $t('COMMON.WIDGETS.DAILY_UPDATE_DELETED') }} <span class="deleted-count">{{ item.deleted_count || 0 }}</span>
                                     </router-link>
                                 </p>
                                 <p v-else-if="item.created_count && !item.deleted_count" class="state">
                                     <router-link :to="item.createdHref">
-                                        Created <span class="created-count">{{ item.created_count || 0 }}</span>
+                                        {{ $t('COMMON.WIDGETS.DAILY_UPDATE_CREATED') }} <span class="created-count">{{ item.created_count || 0 }}</span>
                                     </router-link>
                                 </p>
                                 <p v-else class="state">
                                     <router-link :to="item.deletedHref">
-                                        Deleted <span class="deleted-count">{{ item.deleted_count || 0 }}</span>
+                                        {{ $t('COMMON.WIDGETS.DAILY_UPDATE_DELETED') }} <span class="deleted-count">{{ item.deleted_count || 0 }}</span>
                                     </router-link>
                                 </p>
                             </div>

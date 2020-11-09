@@ -58,7 +58,9 @@
 <script lang="ts">
 import { Location } from 'vue-router';
 
-import { computed, reactive, toRefs } from '@vue/composition-api';
+import {
+    ComponentRenderProxy, computed, getCurrentInstance, reactive, toRefs,
+} from '@vue/composition-api';
 
 import CloudServices from '@/views/common/widgets/cloud-services/CloudServices.vue';
 import DailyUpdates from '@/views/common/widgets/daily-updates/DailyUpdates.vue';
@@ -68,12 +70,14 @@ import HealthDashboard from '@/views/common/widgets/health-dashboard/HealthDashb
 import ResourcesByRegion from '@/views/common/widgets/resources-by-region/ResourcesByRegion.vue';
 import PTab from '@/components/organisms/tabs/tab/PTab.vue';
 import { blue, secondary, secondary1 } from '@/styles/colors';
-import { makeTrItems } from '@/lib/view-helper';
+import VueI18n from 'vue-i18n';
+
+import TranslateResult = VueI18n.TranslateResult;
 
 
 interface SummaryState {
     type: string;
-    title: string;
+    title: TranslateResult;
     to: Location | string;
     color: string;
 }
@@ -90,6 +94,8 @@ export default {
         HealthDashboard,
     },
     setup(props, context) {
+        const vm = getCurrentInstance() as ComponentRenderProxy;
+
         const state = reactive({
             projectName: '',
             projects: {
@@ -106,24 +112,23 @@ export default {
         const projectFilter = `&filters=project_id%3A%3D${projectId.value}`;
 
         const tabData = reactive({
-            tabs: makeTrItems([
-                ['server', 'COMMON.SERVER', { keepAlive: true }],
-                ['cloud_service', 'FIELD.CLOUD_SERVICE'],
-            ],
-            context.parent),
+            tabs: computed(() => [
+                { name: 'server', label: vm.$t('COMMON.WIDGETS.RESOURCE_BY_REGION_SERVER') },
+                { name: 'cloud_service', label: vm.$t('COMMON.WIDGETS.RESOURCE_BY_REGION_CLOUD_SERVICE') },
+            ]),
             activeTab: 'server',
         });
 
         const serverSummaryState: SummaryState = reactive({
             type: 'server',
-            title: 'servers',
+            title: computed(() => vm.$t('COMMON.WIDGETS.SERVICE_SUMMARY_SERVER')),
             to: `/inventory/server?filters=project_id%3A${projectId.value}`,
             color: secondary,
         });
 
         const cloudServiceSummaryState: SummaryState = reactive({
             type: 'cloudService',
-            title: 'cloud services',
+            title: computed(() => vm.$t('COMMON.WIDGETS.SERVICE_SUMMARY_CLOUD_SERVICE')),
             to: `/inventory/cloud-service?filters=project_id%3A${projectId.value}&provider=all`,
             color: secondary1,
         });
@@ -147,20 +152,20 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-    .cloud-service {
-        height: 26rem;
+.cloud-service {
+    height: 26rem;
     &::v-deep .widget-contents {
-         overflow-y: auto;
-         margin-bottom: 1rem;
-     }
+        overflow-y: auto;
+        margin-bottom: 1rem;
     }
+}
 
-    .daily-updates {
-        height: 39.2rem;
-    }
+.daily-updates {
+    height: 39.2rem;
+}
 
-    .health-dashboard {
-        height: 46.75rem;
-    }
+.health-dashboard {
+    height: 46.75rem;
+}
 
 </style>
