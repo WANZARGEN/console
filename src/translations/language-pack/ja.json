@@ -1,29 +1,4 @@
 {
-	"ACTION": {
-		"DICT": {
-			"ADD_TAG": "",
-			"ADD_TAG_BY": "",
-			"CLICK_ADD_BTN_MSG": "",
-			"HELPMSG": "",
-			"INVALID": {
-				"KEY_DUPL": "",
-				"KEY_EMPTY": "",
-				"VAL_EMPTY": ""
-			},
-			"NO_TAG": ""
-		},
-		"DICT_FORM_HELPMSG": "",
-		"LIMIT_OF": "",
-		"NONE": "",
-		"PROJECT": {
-			"ITEM_WILL_SELECT_FOR": "",
-			"NO_PROJECT": "",
-			"SELECT_PROJECT_FOR": "",
-			"SELECT_PROJECT_OR_RELEASE": ""
-		},
-		"SELECTED_OF": "",
-		"TIMEZONE_OF": ""
-	},
 	"AUTOMATION": {
 		"POWER_SCHEDULER": {
 			"DETAILS": {
@@ -128,42 +103,7 @@
 			}
 		}
 	},
-	"BTN": {
-		"ACTION": "",
-		"ADD": "",
-		"ADD_TAG": "",
-		"BACK": "",
-		"CANCEL": "",
-		"CHG_POOL": "",
-		"CHG_REGION": "",
-		"COLLECT_DATA": "",
-		"CONFIRM": "",
-		"COPY": "",
-		"CREATE": "",
-		"CREATE_PROJECT": "",
-		"DELETE": "",
-		"DISABLE": "",
-		"EDIT": "",
-		"ENABLE": "",
-		"EXPORT": "",
-		"FIND": "",
-		"NO": "",
-		"OK": "",
-		"REFRESH": "",
-		"RESET": "",
-		"SAVE": "",
-		"UPDATE": "",
-		"YES": ""
-	},
 	"COMMON": {
-		"ALL": "",
-		"BASE_INFO": "",
-		"CHG_CONT": "",
-		"CHG_PAST": "",
-		"CHG_PRO": "",
-		"COLLECT": "",
-		"COLLECTOR": "",
-		"COLLECT_CONT": "",
 		"COLLECT_MODAL": {
 			"ALT_E_COLLECT_DATA": "",
 			"ALT_S_COLLECT_DATA": "",
@@ -175,47 +115,6 @@
 			"SELECT_COLLECTOR": "",
 			"TITLE": ""
 		},
-		"COLLECT_PAST": "",
-		"COL_DATA": "",
-		"COL_ID": "",
-		"COL_INFO": "",
-		"COL_MODE": "",
-		"COMMON_USER": "",
-		"COMPUTE": "",
-		"CORE": "",
-		"COUNT": "",
-		"CREATE": "",
-		"CREATED": "",
-		"CREATE_BY": "",
-		"CREATE_LEAF": "",
-		"CREATE_NODE": "",
-		"CREDENTIAL": "",
-		"CREDENTIALS": "",
-		"CREDENTIAL_GRP": "",
-		"CRT_CONT": "",
-		"CRT_COUNT": "",
-		"CRT_PAST": "",
-		"DASHBOARD": "",
-		"DATA": "",
-		"DATA_CENTER": "",
-		"DEF_COL_STATE": "",
-		"DELETE": "",
-		"DELETE_CONT": "",
-		"DELETE_PAST": "",
-		"DELETE_SEL": "",
-		"DELETE_SELECT": "",
-		"DELETE_SUCC": "",
-		"DELETE_YN": "",
-		"DEL_MEM": "",
-		"DEL_PARAM": "",
-		"DESC": "",
-		"DETAILS": "",
-		"DEVICE": "",
-		"DIRECTION": "",
-		"DISK_SZ": "",
-		"DOMAIN_ID": "",
-		"DR_SERV": "",
-		"EMAIL": "",
 		"ERROR": {
 			"404_GO_BACK_1": "",
 			"404_GO_BACK_2": "",
@@ -224,54 +123,10 @@
 			"NO_RESOURCE_GO_BACK_2": "",
 			"NO_RESOURCE_MSG": ""
 		},
-		"EVENT": "",
-		"EXECR": "",
-		"EXPORT": "",
-		"FAIL_REASON": "",
-		"FIND_CONT": "",
-		"FIND_PAST": "",
-		"FINISH": "",
-		"FINISHED": "",
 		"FNB": {
 			"PRIVACY": "",
 			"PRIVACY_MSG": ""
 		},
-		"FORGPW": "",
-		"FQDN": "",
-		"GET_CONT": "",
-		"GET_PAST": "",
-		"GROUP": "",
-		"HOST": "",
-		"HOURLY": "",
-		"HOURS": "",
-		"ID": "",
-		"IDENTITY": "",
-		"IMAGE": "",
-		"IMPORT": "",
-		"INFO": "",
-		"INST_ID": "",
-		"INST_TYPE": "",
-		"INTERVAL": "",
-		"INVENTORY": "",
-		"IP": "",
-		"ISSUE_TYPE": "",
-		"JOBS": "",
-		"JOB_ID": "",
-		"KERNEL": "",
-		"KEY": "",
-		"KEY_PAIR": "",
-		"LABELS": "",
-		"LANGUAGE": "",
-		"LAST_COL": "",
-		"LAST_SCHEDULED": "",
-		"LIST": "",
-		"LOCAL": "",
-		"LT_BOOT": "",
-		"MAC": "",
-		"MEMBER": "",
-		"MEMORY": "",
-		"MNG": "",
-		"MOBILE": "",
 		"MONITORING": {
 			"DISPLAY_TIMEZONE": "",
 			"LIMIT_OF_RESOURCE": "",
@@ -282,28 +137,6 @@
 			"STATISTICS": "",
 			"TIME_RANGE": ""
 		},
-		"NAME": "",
-		"NETWORK": "",
-		"NEXT": "",
-		"NO_ITEM": "",
-		"NO_SELECT": "",
-		"OFFICIAL": "",
-		"OPTIONAL": "",
-		"O_ARCH": "",
-		"O_DETAIL": "",
-		"O_DIS": "",
-		"O_TYPE": "",
-		"PHONE": "",
-		"PL": "",
-		"PLATFORM": "",
-		"PL_ID": "",
-		"PL_NM": "",
-		"POOL": "",
-		"PORT_RANGE": "",
-		"PREV": "",
-		"PRIORITY": "",
-		"PRI_IP": "",
-		"PROCESSED": "",
 		"PROFILE": {
 			"ALT_E_UPDATE": "",
 			"ALT_S_UPDATE": "",
@@ -312,7 +145,10 @@
 			"GROUP": "",
 			"ID": "",
 			"LANGUAGE": "",
+			"MAX_LENGTH_INVALID": "",
+			"MIN_LENGTH_INVALID": "",
 			"MOBILE": "",
+			"NAME": "",
 			"NAME_REQUIRED": "",
 			"PASSWORD": "",
 			"PASSWORD_CHECK": "",
@@ -320,52 +156,21 @@
 			"TIMEZONE": "",
 			"TITLE": ""
 		},
-		"PROJECT": "",
-		"PROJECT_GRP": "",
-		"PROJECT_GRP_ID": "",
-		"PROJECT_GRP_NM": "",
-		"PROJECT_ID": "",
-		"PROJECT_NM": "",
-		"PROTOCOL": "",
-		"PROVIDER": "",
-		"RAWDATA": "",
-		"REGION": "",
-		"REGISTER": "",
-		"RELEASE": "",
-		"REMEMBER": "",
-		"REPO": "",
-		"RESOURCE": "",
-		"RESULT": "",
-		"RG": "",
-		"RG_ID": "",
-		"RG_NM": "",
-		"ROLE": "",
-		"SCHEDULE": "",
-		"SEARCH": "",
-		"SEC_GROUP": "",
-		"SERVER": "",
-		"SETTINGS": "",
-		"SE_TYPE": "",
-		"SG_ID": "",
-		"SG_NAME": "",
 		"SIGN_IN": {
 			"ADMIN_ID": "",
 			"ADMIN_SIGN_IN": "",
+			"ALT_E_LOGIN": "",
 			"MEMBER_SIGN_IN": "",
 			"OR": "",
 			"PASSWORD": "",
+			"PASSWORD_REQUIRED": "",
 			"ROOT_ACCOUNT": "",
 			"SIGN_IN": "",
 			"TITLE": "",
 			"USER_ID": "",
+			"USER_ID_REQUIRED": "",
 			"VALIDATION": ""
 		},
-		"SIZE": "",
-		"SRC_DEST": "",
-		"STATE": "",
-		"STATUS": "",
-		"SUMMARY": "",
-		"TAG": "",
 		"TAGS": {
 			"ADD_TAG": "",
 			"ADD_TAG_DESC": "",
@@ -381,30 +186,11 @@
 			"TITLE": "",
 			"VALUE": ""
 		},
-		"TIMEZONE": "",
-		"TIME_SCHEDULE": "",
-		"TITLE": "",
 		"TREE_MODAL": {
 			"SELECT_NO_PROJECT": "",
 			"SELECT_PROJECT": "",
 			"TITLE": ""
 		},
-		"TR_NOTI": "",
-		"TR_NOTI_CON": "",
-		"TYPE": "",
-		"UID": "",
-		"UPDATE": "",
-		"UPDATE_SEL": "",
-		"UPDATE_SELECT": "",
-		"UPT_CONT": "",
-		"UPT_COUNT": "",
-		"UPT_PAST": "",
-		"USER": "",
-		"USER_ID": "",
-		"VERIFIED": "",
-		"VERIFY": "",
-		"VERSION": "",
-		"VM": "",
 		"WIDGETS": {
 			"CLOUD_SERVICE_CREATE_COLLECTOR": "",
 			"CLOUD_SERVICE_HELP": "",
@@ -457,90 +243,9 @@
 			"TOP_PROJECT_RANK": "",
 			"TOP_PROJECT_SERVER": "",
 			"TOP_PROJECT_TITLE": ""
-		},
-		"ZE": "",
-		"ZE_ID": "",
-		"ZE_NM": "",
-		"ZONE": ""
-	},
-	"DASHBOARD": {
-		"ACTION": {
-			"CLOUD_SERVICES": "",
-			"COLLECTORS": "",
-			"CRT_DBD": "",
-			"CRT_GUIDE": "",
-			"DAILY_UPDATES": "",
-			"HEALTH_DASHBOARD": "",
-			"NO_RUN": "",
-			"RECENT_COLLECTING": "",
-			"TOP_PROJECTS": ""
-		},
-		"BTN": {
-			"GET_START": ""
-		},
-		"RES_REGION": "",
-		"SERVER_STATE": "",
-		"SERVER_TYPE": "",
-		"SUMMARY": ""
-	},
-	"ERROR": {
-		"None": ""
-	},
-	"FIELD": {
-		"ACCOUNT_NAME": "",
-		"CLOUD_SERVICE": "",
-		"COLLECTOR": "",
-		"CREDENTIALS": "",
-		"EMAIL": "",
-		"ID": "",
-		"NAME": "",
-		"PROJECT": "",
-		"PROJECT_GRP": "",
-		"RANK": "",
-		"SERVER": "",
-		"SERVICE_PROVIDER": "",
-		"START_TIME": "",
-		"STATE": "",
-		"SUPPORTED": ""
-	},
-	"FORM": {
-		"LABEL": {
-			"EMAIL": "",
-			"GROUP": "",
-			"LANG": "",
-			"NAME": "",
-			"NEW_PWD": "",
-			"PHONE": "",
-			"PWD": "",
-			"PWD_CHECK": "",
-			"TAG": "",
-			"TIME": "",
-			"USERID": ""
-		},
-		"None": ""
+		}
 	},
 	"IDENTITY": {
-		"ADD_ARG": "",
-		"BTN": {
-			"None": ""
-		},
-		"CHECK_HASH": "",
-		"CRT_FAIL_ARG": "",
-		"CRT_GRP": "",
-		"CRT_PROJ": "",
-		"CRT_PROJ_GRP": "",
-		"CRT_SUCC_ARG": "",
-		"DEL_ARG": "",
-		"DEL_FAIL_ARG": "",
-		"DEL_FAIL_CHI_ARG": "",
-		"DEL_MEMBER_PRJ": "",
-		"DEL_SUCC_ARG": "",
-		"NO_PROJECT_SEL": "",
-		"NO_PROJECT_SEL_DT": "",
-		"PARENT_ARG": "",
-		"REQ_FIELD": "",
-		"SCH_PAC_DT": "",
-		"SELECT_ARG": "",
 		"SERVICE_ACCOUNT": {
 			"ADD": {
 				"ACCOUNT": "",
@@ -599,30 +304,72 @@
 				"TITLE": ""
 			}
 		},
-		"TAB": {
-			"None": ""
-		},
-		"UPDATE_PROJ": "",
-		"UPDATE_PROJ_GRP": "",
-		"UPT_ARG": "",
-		"UPT_FAIL_ARG": "",
-		"UPT_SUCC_ARG": ""
+		"USER": {
+			"ACTION": "",
+			"ALT_E_ADD_USER": "",
+			"ALT_E_DELETE_USER": "",
+			"ALT_E_DISABLE": "",
+			"ALT_E_ENABLE": "",
+			"ALT_E_UPDATE_USER": "",
+			"ALT_S_ADD_USER": "",
+			"ALT_S_DELETE_USER": "",
+			"ALT_S_DISABLE": "",
+			"ALT_S_ENABLE": "",
+			"ALT_S_UPDATE_USER": "",
+			"BASE_INFORMATION": "",
+			"CREATE": "",
+			"DELETE": "",
+			"DELETE_MODAL_DESC": "",
+			"DELETE_MODAL_TITLE": "",
+			"DETAILS": "",
+			"DISABLE": "",
+			"DISABLE_MODAL_DESC": "",
+			"DISABLE_MODAL_TITLE": "",
+			"DOMAIN_ID": "",
+			"EMAIL": "",
+			"ENABLE": "",
+			"ENABLE_MODAL_DESC": "",
+			"ENABLE_MODAL_TITLE": "",
+			"FORM": {
+				"ADD_TITLE": "",
+				"CHECK_USER_ID": "",
+				"EMAIL": "",
+				"EMPTY_SPACE_INVALID": "",
+				"GROUP": "",
+				"LANGUAGE": "",
+				"MAX_LENGTH_INVALID": "",
+				"MIN_LENGTH_INVALID": "",
+				"MOBILE": "",
+				"NAME": "",
+				"NAME_PLACEHOLDER": "",
+				"NAME_VALID": "",
+				"PASSWORD": "",
+				"PASSWORD_CHECK": "",
+				"PASSWORD_CHECK_INVALID": "",
+				"PASSWORD_HELP_TEXT": "",
+				"REQUIRED_FIELD": "",
+				"TAGS": "",
+				"TIMEZONE": "",
+				"TIMEZONE_INVALID": "",
+				"UPDATE_TITLE": "",
+				"USER_ID": "",
+				"USER_ID_DUPLICATED": "",
+				"USER_ID_NOT_EXIST": ""
+			},
+			"GROUP": "",
+			"LANGUAGE": "",
+			"MOBILE": "",
+			"NAME": "",
+			"NO_SELECTED": "",
+			"SELECTED_DATA": "",
+			"STATE": "",
+			"TIMEZONE": "",
+			"TITLE": "",
+			"UPDATE": "",
+			"USER_ID": ""
+		}
 	},
 	"INVENTORY": {
-		"ACTION": {
-			"COLLECT_ALL": "",
-			"COLLECT_CREATE": ""
-		},
-		"ADD_SCHEDULE": "",
-		"ADD_TAG": "",
-		"BACK_COL": "",
-		"BTN": {
-			"None": "",
-			"SET_CLOSE": "",
-			"SET_INSERVICE": "",
-			"SET_MAINTENANCE": ""
-		},
-		"CHOOSE_CRD": "",
 		"CLOUD_SERVICE": {
 			"ADMIN": {
 				"MEMBER": ""
@@ -635,7 +382,8 @@
 				"REGION": "",
 				"SERVICE_CATEGORY": "",
 				"SERVICE_PROVIDER": "",
-				"SHOW_ALL": ""
+				"SHOW_ALL": "",
+				"TITLE": ""
 			},
 			"PAGE": {
 				"ACTION": "",
@@ -656,36 +404,6 @@
 				"TAB_TAG": ""
 			}
 		},
-		"COLL_TIME": "",
-		"COL_NAME": "",
-		"COL_NAME_VD": "",
-		"COL_OPS": "",
-		"COL_PRIORITY_VD": "",
-		"CONF_COL": "",
-		"CRT_COLL": "",
-		"CRT_CRD": "",
-		"CRT_FAIL_ARG": "",
-		"CRT_PROJ": "",
-		"CRT_SUCC_ARG": "",
-		"DEL_COL": "",
-		"DEL_FAIL_ARG": "",
-		"DEL_FAIL_CHI_ARG": "",
-		"DEL_SCHEDULE": "",
-		"DEL_SUCC_ARG": "",
-		"DISABLE_COL": "",
-		"ENABLE_COL": "",
-		"FILTERS": "",
-		"MANAGE_CRD": "",
-		"NO_DT_CEN_DT": "",
-		"NO_DT_CEN_SEL": "",
-		"OPTIONS": "",
-		"PARENT_ARG": "",
-		"POOL_NM": "",
-		"PRIORITY": "",
-		"REGION_NM": "",
-		"REQ_FIELD": "",
-		"SCHEDULE": "",
-		"SELECT_ARG": "",
 		"SERVER": {
 			"MAIN": {
 				"ACTION": "",
@@ -710,19 +428,7 @@
 				"TAB_TAG": "",
 				"TITLE": ""
 			}
-		},
-		"TAB": {
-			"ADD_TAG": "",
-			"CONFIRM_CRD": "",
-			"CONF_COLLECTOR": ""
-		},
-		"UPT_COL": "",
-		"UPT_FAIL_ARG": "",
-		"UPT_SCHEDULE": "",
-		"UPT_SUCC_ARG": "",
-		"VERIFY_CRD": "",
-		"VERSION": "",
-		"ZONE_NM": ""
+		}
 	},
 	"MANAGEMENT": {
 		"COLLECTOR_HISTORY": {
@@ -768,36 +474,84 @@
 			}
 		}
 	},
-	"ORGANISMS": {
-		"CREATE_ARG": "",
-		"DELETE_ARG": "",
-		"NO_DATA": "",
-		"NO_TAG": "",
-		"TAG": "",
-		"TAG_EMPTY": "",
-		"UPDATE_ARG": ""
+	"MENU": {
+		"AUTOMATION": {
+			"AUTOMATION": "",
+			"POWER_SCHEDULER": ""
+		},
+		"DASHBOARD": {
+			"DASHBOARD": ""
+		},
+		"IDENTITY": {
+			"IDENTITY": "",
+			"ROLE": "",
+			"SERVICE_ACCOUNT": "",
+			"SERVICE_ACCOUNT_ADD_ACCOUNT": "",
+			"USER": ""
+		},
+		"INVENTORY": {
+			"CLOUD_SERVICE": "",
+			"INVENTORY": "",
+			"SERVER": ""
+		},
+		"MANAGEMENT": {
+			"COLLECTOR_HISTORY": "",
+			"COLLECTOR_HISTORY_JOB_MANAGEMENT": "",
+			"MANAGEMENT": "",
+			"PLUGIN": ""
+		},
+		"PLUGIN": {
+			"COLLECTOR": "",
+			"CREATE_COLLECTOR": "",
+			"PLUGIN": ""
+		},
+		"PROJECT": {
+			"PROJECT": ""
+		}
 	},
-	"PANEL": {
-		"BASE_INFO": "",
-		"COMPUTE": "",
-		"CREDENTIAL": "",
-		"DATA": "",
-		"DETAILS": "",
-		"FILTER_FORMAT": "",
-		"INFO": "",
-		"JOBS": "",
-		"LOCAL": "",
-		"NONE_TR": "",
-		"RAWDATA": "",
-		"SCHEDULE": "",
-		"TAG": "",
-		"TAGS": "",
-		"VM": ""
+	"PAGE_SCHEMA": {
+		"BASE_INFO": "Base Information",
+		"BIOS_RELEASED_AT": "Bios Released",
+		"BIOS_VERSION": "Bios Version",
+		"CLOUD_SERVICE_GROUP": "Cloud Service Group",
+		"CLOUD_SERVICE_TYPE": "Cloud Service Type",
+		"COLLECTION_STATE": "Collection State",
+		"COLLECTOR": "Collectors",
+		"CORE_PER_SOCKET": "Core per Socket",
+		"CPU_ARCH": "CPU Architecture",
+		"CPU_CORE": "Core",
+		"CPU_MODEL": "CPU Model",
+		"CPU_SOCKET": "CPU Socket",
+		"CREATED_AT": "Created",
+		"DELETED_AT": "Deleted",
+		"HARDWARE": "Hardware",
+		"HYPER_THREADING": "Hyper-threading",
+		"ID": "ID",
+		"MANAGEMENT_STATE": "Management State",
+		"MANUFACTURER": "Manufacturer",
+		"MEMORY": "Memory",
+		"MEMORY_COUNT": "Memory Count",
+		"NAME": "Name",
+		"OS": "Operating System",
+		"OS_ARCH": "OS Architecture",
+		"OS_DETAILS": "OS Version Details",
+		"OS_DISTRO": "OS Distribution",
+		"OS_LICENSE": "OS License",
+		"OS_TYPE": "OS Type",
+		"PRIMARY_IP_ADDRESS": "Primary IP Address",
+		"PROJECT": "Project",
+		"PROVIDER": "Provider",
+		"RAW_DATA": "",
+		"REGION": "Region",
+		"RESOURCE_ID": "Resource ID",
+		"SECRET": "Secrets",
+		"SERIAL_NUMBER": "Serial Number",
+		"SERVER_MODEL": "Server Model",
+		"SERVER_TYPE": "Server Type",
+		"SERVICE_ACCOUNT": "Service Accounts",
+		"UPDATED_AT": "Updated"
 	},
 	"PLUGIN": {
-		"BTN": {
-			"RECOVERY": ""
-		},
 		"COLLECTOR": {
 			"CREATE": {
 				"ALT_E_CREATE_TITLE": "",
@@ -920,9 +674,6 @@
 				"SEARCH_PLACEHOLDER": "",
 				"TITLE": ""
 			}
-		},
-		"TAB": {
-			"PLUGIN": ""
 		}
 	},
 	"PROJECT": {
@@ -933,6 +684,7 @@
 			"ALT_E_DELETE_PROJECT": "",
 			"ALT_E_UPDATE_PROJECT": "",
 			"ALT_S_ADD_MEMBER": "",
+			"ALT_S_DELETE_MEMBER": "",
 			"ALT_S_DELETE_PROJECT": "",
 			"ALT_S_UPDATE_PROJECT": "",
 			"DELETE": "",
@@ -943,6 +695,8 @@
 			"MODAL_CREATE_PROJECT_LABEL": "",
 			"MODAL_CREATE_PROJECT_PLACEHOLDER": "",
 			"MODAL_CREATE_PROJECT_TITLE": "",
+			"MODAL_DELETE_MEMBER_CONTENT": "",
+			"MODAL_DELETE_MEMBER_TITLE": "",
 			"MODAL_DELETE_PROJECT_CONTENT": "",
 			"MODAL_DELETE_PROJECT_TITLE": "",
 			"MODAL_UPDATE_PROJECT_TITLE": "",
@@ -950,6 +704,7 @@
 			"MODAL_VALIDATION_LENGTH": "",
 			"MODAL_VALIDATION_REQUIRED": "",
 			"PROJECT_ID": "",
+			"REPORT_CANCEL": "",
 			"REPORT_DESC": "",
 			"REPORT_DOWNLOAD_FILE_DESC": "",
 			"REPORT_LABEL_COMPANY_NAME": "",
@@ -996,92 +751,5 @@
 			"SHOW_ALL": "",
 			"SHOW_ALL_TOOLTIP": ""
 		}
-	},
-	"PWR_SCHED": {
-		"RESRC_GRP": {
-			"ADD_TAG": "",
-			"TAG": "",
-			"TAG_DESC": "",
-			"TAG_DESC2": ""
-		}
-	},
-	"SECRET": {
-		"BTN": {
-			"None": ""
-		},
-		"JSON_ALERT": "",
-		"NO_FORMAT": "",
-		"SECRET_TYPE": "",
-		"TAB": {
-			"None": ""
-		}
-	},
-	"SERVICE": {
-		"IDENTITY": "",
-		"INVENTORY": "",
-		"PLUGIN": "",
-		"PROVIDER": "",
-		"REPOSITORY": "",
-		"SECRET": "",
-		"SUPERVISOR": ""
-	},
-	"SIGNIN": {
-		"AUTH_G_FAIL_BODY": "",
-		"PASS_EMPTY": "",
-		"ROOT_CREDENTIALS": "",
-		"SIGN_FAIL_BODY": "",
-		"SIGN_IN": "",
-		"SIGN_IN_MSG": "",
-		"USER_EMPTY": "",
-		"WELCOME_MSG": "",
-		"WELCOME_MSG_P": ""
-	},
-	"SUCCESS": {
-		"None": ""
-	},
-	"TAB": {
-		"ADMIN": "",
-		"CREDENTIALS": "",
-		"DATA": "",
-		"DETAILS": "",
-		"HISTORY": "",
-		"MEMBER": "",
-		"MONITORING": "",
-		"RAW_DATA": "",
-		"REPORT": "",
-		"SECRET": "",
-		"SELECTED_DATA": "",
-		"TAG": ""
-	},
-	"TREE_TYPE": {
-		"CREATE": "",
-		"CREATE_GRP": "",
-		"DELETE": "",
-		"POOL": "",
-		"PROJ": "",
-		"PROJECT_GROUP": "",
-		"REGION": "",
-		"UPDATE": "",
-		"ZONE": ""
-	},
-	"WORD": {
-		"BASE_INFO": "",
-		"CIDR": "",
-		"CLOUDSERVICE": "",
-		"COLLECTOR": "",
-		"ID": "",
-		"KEY": "",
-		"LOCAL_TIME": "",
-		"RESOURCE": "",
-		"SERVER": "",
-		"SERVICE_ACCOUNT": "",
-		"STATISTICS": "",
-		"TAG": "",
-		"TAGS": "",
-		"TIME_RANGE": "",
-		"USER": "",
-		"VALUE": "",
-		"VERSION": "",
-		"VM": ""
 	}
 }

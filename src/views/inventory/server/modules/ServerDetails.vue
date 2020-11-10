@@ -28,7 +28,8 @@
 <script lang="ts">
 
 import {
-    computed, reactive, toRefs, watch,
+    ComponentRenderProxy,
+    computed, getCurrentInstance, reactive, toRefs, watch,
 } from '@vue/composition-api';
 import PDynamicLayout from '@/components/organisms/dynamic-layout/PDynamicLayout.vue';
 import { QueryHelper, SpaceConnector } from '@/lib/space-connector';
@@ -45,6 +46,8 @@ import config from '@/lib/config';
 import { store } from '@/store';
 import { Reference } from '@/lib/reference/type';
 import { referenceFieldFormatter } from '@/lib/reference/referenceFieldFormatter';
+import { TabItem } from '@/components/organisms/tabs/tab/type';
+import { find } from 'lodash';
 
 const defaultFetchOptions: DynamicLayoutFetchOptions = {
     sortBy: '',
@@ -68,6 +71,8 @@ export default {
         },
     },
     setup(props) {
+        const vm = getCurrentInstance() as ComponentRenderProxy;
+
         const layoutSchemaCacheMap = {};
         const fetchOptionsMap = {};
         const dataMap = {};
@@ -82,7 +87,14 @@ export default {
             valueHandlerMap: {} as ValueHandlerMap,
             language: computed(() => store.state.user.language),
 
-            tabs: computed<string[]>(() => state.layouts.map(d => d.name)),
+            // button tab
+            tabs: computed<TabItem[]>(() => {
+                const local = vm.$i18n.locale;
+                return state.layouts.map(d => ({
+                    label: vm.$t(d.options?.translation_id, local) || d.name,
+                    name: d.name,
+                }));
+            }),
             activeTab: '',
 
             // schema
@@ -113,12 +125,11 @@ export default {
             if (!layouts) {
                 try {
                     const res = await SpaceConnector.client.addOns.pageSchema.get({
-                        // eslint-disable-next-line camelcase
                         resource_type: 'inventory.Server',
                         schema: 'details',
                         options: {
-                            // eslint-disable-next-line camelcase
                             server_id: props.serverId,
+                            translation_id: true,
                         },
                     });
 
@@ -130,7 +141,7 @@ export default {
 
             layoutSchemaCacheMap[props.serverId] = layouts;
             state.layouts = layouts || [];
-            if (!state.tabs.includes(state.activeTab)) state.activeTab = state.tabs[0];
+            if (!find(state.tabs, { name: state.activeTab })) state.activeTab = state.tabs[0].name;
             if (state.currentLayout.options?.search) setSearchOptions();
         };
 
@@ -157,9 +168,7 @@ export default {
             const params: any = { server_id: props.serverId };
             const query = getQuery();
             if (query) params.query = query;
-            // eslint-disable-next-line camelcase
             const keyPath = state.currentLayout.options?.root_path;
-            // eslint-disable-next-line camelcase
             if (keyPath) params.key_path = keyPath;
             return params;
         };
@@ -256,10 +265,10 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-    .raw-data {
-        @apply px-4;
-    }
-    .p-button-tab {
-        @apply mt-8;
-    }
+.raw-data {
+    @apply px-4;
+}
+.p-button-tab {
+    @apply mt-8;
+}
 </style>

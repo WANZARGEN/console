@@ -64,6 +64,7 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable camelcase */
 import {
     defineComponent, getCurrentInstance, reactive, toRefs,
 } from '@vue/composition-api';
@@ -93,8 +94,8 @@ export default defineComponent({
             loginFail: false,
         });
         const requireFieldValidations = {
-            userId: [requiredValidation('Please enter user ID')],
-            password: [requiredValidation('Please enter password')],
+            userId: [requiredValidation(vm.$t('COMMON.SIGN_IN.USER_ID_REQUIRED'))],
+            password: [requiredValidation(vm.$t('COMMON.SIGN_IN.PASSWORD_REQUIRED'))],
         };
         const validateAPI = formValidation(state, requireFieldValidations);
         const checkUserId = async () => {
@@ -113,23 +114,19 @@ export default defineComponent({
                 await vm.$store.dispatch('user/signIn', {
                     domain_id: vm.$store.state.domain.domainId,
                     credentials: {
-                        // eslint-disable-next-line camelcase
                         user_type: 'DOMAIN_OWNER',
-                        // eslint-disable-next-line camelcase
                         user_id: state.userId,
                         password: state.password,
                     },
                 }).catch((e) => {
                     state.loginFail = true;
                     state.password = '';
-                    showErrorMessage('Please Confirm your ID or PW', '', context.root);
+                    showErrorMessage(vm.$t('COMMON.SIGN_IN.ALT_E_LOGIN'), '', context.root);
                 });
 
                 const response = await vm.$http.post('/identity/token/issue', {
                     credentials: {
-                        // eslint-disable-next-line camelcase
                         user_type: 'DOMAIN_OWNER',
-                        // eslint-disable-next-line camelcase
                         user_id: state.userId,
                         password: state.password,
                     },

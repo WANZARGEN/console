@@ -12,25 +12,25 @@
         <template #body>
             <div class="user-input-wrapper">
                 <div class="top-part">
-                    <p-field-group :label="$t('COMMON.USER_ID')"
+                    <p-field-group :label="$t('IDENTITY.USER.FORM.USER_ID')"
                                    :required="true"
-                                   :invalid-text="invalidMsg.user_id"
-                                   :invalid="invalidState.user_id"
-                                   valid-text="you can use this ID"
-                                   :valid="validState.user_id"
+                                   :invalid="!validationState.isUserIdValid"
+                                   :invalid-text="validationState.userIdInvalidText"
+                                   :valid="validationState.isUserIdValid"
+                                   :valid-text="validationState.userIdValidText"
                     >
                         <template #default="{invalid}">
                             <div>
                                 <p-text-input v-model="formState.user_id"
                                               v-focus
-                                              placeholder="Insert User ID here"
+                                              :placeholder="$t('IDENTITY.USER.FORM.NAME_PLACEHOLDER')"
                                               :disabled="updateMode"
                                               :class="{'is-invalid': invalid}"
                                 />
                                 <p-button style-type="primary-dark" :disabled="updateMode" class="user-id-check-button"
                                           @click="checkUserID"
                                 >
-                                    check user id
+                                    {{ $t('IDENTITY.USER.FORM.CHECK_USER_ID') }}
                                 </p-button>
                             </div>
                         </template>
@@ -39,15 +39,15 @@
                 <p-hr class="p-divider" />
                 <div class="bottom-part">
                     <div class="bottom-left-part">
-                        <p-field-group v-if="formState.is_local_auth"
-                                       label="Password"
-                                       :invalid-text="invalidMsg.password1"
-                                       :invalid="invalidState.password1"
+                        <p-field-group v-if="isInternalAuth"
+                                       :label="$t('IDENTITY.USER.FORM.PASSWORD')"
+                                       :invalid="!validationState.isPasswordValid"
+                                       :invalid-text="validationState.passwordInvalidText"
                                        :required="true"
-                                       help-text="Your Password must be 5 ~ 12 characters long"
+                                       :help-text="$t('IDENTITY.USER.FORM.PASSWORD_HELP_TEXT')"
                         >
                             <template v-slot:default="{invalid}">
-                                <p-text-input v-model="formState.password1"
+                                <p-text-input v-model="formState.password"
                                               type="password"
                                               class="block"
                                               :class="{'is-invalid':invalid}"
@@ -55,31 +55,31 @@
                             </template>
                         </p-field-group>
 
-                        <p-field-group :label="$t('COMMON.NAME')">
+                        <p-field-group :label="$t('IDENTITY.USER.FORM.NAME')">
                             <p-text-input v-model="formState.name" class="block" />
                         </p-field-group>
 
-                        <p-field-group :label="$t('COMMON.MOBILE')">
+                        <p-field-group :label="$t('IDENTITY.USER.FORM.MOBILE')">
                             <p-text-input v-model="formState.mobile" class="block" />
                         </p-field-group>
 
-                        <p-field-group :label="$t('COMMON.LANGUAGE')">
-                            <p-select-dropdown v-model="formState.language" :items="languageSelectItems" />
+                        <p-field-group :label="$t('IDENTITY.USER.FORM.LANGUAGE')">
+                            <p-select-dropdown v-model="formState.language" :items="languages" />
                         </p-field-group>
 
-                        <p-field-group :label="$t('COMMON.TIMEZONE')">
-                            <p-select-dropdown v-model="formState.timezone" :items="timezoneSelectItems" />
+                        <p-field-group :label="$t('IDENTITY.USER.FORM.TIMEZONE')">
+                            <p-select-dropdown v-model="formState.timezone" :items="timezones" />
                         </p-field-group>
                     </div>
                     <div class="bottom-right-part">
-                        <p-field-group v-if="formState.is_local_auth"
-                                       label="Password Check"
-                                       :invalid-text="invalidMsg.password2"
-                                       :invalid="invalidState.password2"
+                        <p-field-group v-if="isInternalAuth"
+                                       :label="$t('IDENTITY.USER.FORM.PASSWORD_CHECK')"
+                                       :invalid="!validationState.isPasswordCheckValid"
+                                       :invalid-text="validationState.passwordCheckInvalidText"
                                        :required="true"
                         >
                             <template v-slot:default="{invalid}">
-                                <p-text-input v-model="formState.password2"
+                                <p-text-input v-model="formState.passwordCheck"
                                               type="password"
                                               class="block"
                                               :class="{'is-invalid':invalid}"
@@ -87,16 +87,16 @@
                             </template>
                         </p-field-group>
 
-                        <p-field-group :label="$t('COMMON.EMAIL')">
+                        <p-field-group :label="$t('IDENTITY.USER.FORM.EMAIL')">
                             <p-text-input v-model="formState.email" class="block" />
                         </p-field-group>
 
-                        <p-field-group :label="$t('COMMON.GROUP')">
+                        <p-field-group :label="$t('IDENTITY.USER.FORM.GROUP')">
                             <p-text-input v-model="formState.group" class="block" />
                         </p-field-group>
 
-                        <p-field-group :label="$t('WORD.TAGS')">
-                            <p-dict-input-group ref="dictRef"
+                        <p-field-group :label="$t('IDENTITY.USER.FORM.TAGS')">
+                            <p-dict-input-group ref="tagInputRef"
                                                 :dict="formState.tags"
                                                 show-validation
                                                 class="tag-input"
@@ -109,10 +109,12 @@
     </p-button-modal>
 </template>
 
-<script>
+<script lang="ts">
 /* eslint-disable camelcase */
+import { TranslateResult } from 'vue-i18n';
+
 import {
-    reactive, computed, ref, toRefs,
+    reactive, toRefs, computed, getCurrentInstance, ComponentRenderProxy,
 } from '@vue/composition-api';
 
 import PButtonModal from '@/components/organisms/modals/button-modal/PButtonModal.vue';
@@ -123,17 +125,9 @@ import PButton from '@/components/atoms/buttons/PButton.vue';
 import PTextInput from '@/components/atoms/inputs/PTextInput.vue';
 import PHr from '@/components/atoms/hr/PHr.vue';
 
-import {
-    formValidation,
-    makeProxy,
-    requiredValidation,
-    userIDValidation,
-    Validation,
-    lengthMaxValidation,
-    lengthMinValidation,
-    checkTimeZoneValidation, noEmptySpaceValidation,
-} from '@/lib/compostion-util';
-import { useStore } from '@/store/toolset';
+import { makeProxy } from '@/lib/compostion-util';
+import { SpaceConnector } from '@/lib/space-connector';
+import { store } from '@/store';
 
 export default {
     name: 'PUserForm',
@@ -164,41 +158,33 @@ export default {
         },
         item: {
             type: Object,
-            default: () => ({
-                user_id: '',
-                password1: '',
-                password2: '',
-                name: '',
-                email: '',
-                mobile: '',
-                group: '',
-                language: 'korean',
-                timezone: 'Asia/Seoul',
-                tags: {},
-            }),
+            default: undefined,
         },
         updateMode: {
             type: Boolean,
             default: false,
         },
     },
-    setup(props, context) {
+    setup(props, { emit }) {
+        const vm = getCurrentInstance() as ComponentRenderProxy;
+
         const state = reactive({
-            proxyVisible: makeProxy('visible', props, context.emit),
-            modal: null,
-            allBodyClass: computed(() => {
-                const res = props.bodyClass ? [...props.bodyClass] : [];
-                if (props.size) res.push(props.size);
-                if (props.scrollable) res.push('scrollable');
-                return res;
-            }),
+            proxyVisible: makeProxy('visible', props, emit),
+            isInternalAuth: computed(() => store.getters['domain/isInternalAuth']),
+            tagInputRef: null as any,
+            languages: [
+                { type: 'item', label: 'English', name: 'en' },
+                { type: 'item', label: '한국어', name: 'ko' },
+            ],
+            timezones: [
+                { type: 'item', label: 'UTC', name: 'UTC' },
+                { type: 'item', label: 'Asia/Seoul', name: 'Asia/Seoul' },
+            ],
         });
-        const { domain } = useStore();
-        const dictRef = ref(null);
         const formState = reactive({
             user_id: '',
-            password1: '',
-            password2: '',
+            password: '',
+            passwordCheck: '',
             name: '',
             email: '',
             mobile: '',
@@ -206,104 +192,138 @@ export default {
             language: 'en',
             timezone: 'UTC',
             tags: {},
-            isLastCheck: false,
-            is_local_auth: computed(() => domain.state.isLocalType),
-            ...props.item,
         });
-        const languageSelectItems = [
-            { type: 'item', label: 'English', name: 'en' },
-            {
-                type: 'item', label: '한국어', name: 'ko',
-            },
-        ];
-        const timezoneSelectItems = [
-            { type: 'item', label: 'UTC', name: 'UTC' },
-            { type: 'item', label: 'Asia/Seoul', name: 'Asia/Seoul' },
-        ];
+        const validationState = reactive({
+            isUserIdValid: undefined as undefined | boolean,
+            userIdInvalidText: '' as TranslateResult | string,
+            userIdValidText: vm.$t('IDENTITY.USER.FORM.NAME_VALID'),
+            //
+            isPasswordValid: undefined as undefined | boolean,
+            passwordInvalidText: '' as TranslateResult | string,
+            isPasswordCheckValid: undefined as undefined | boolean,
+            passwordCheckInvalidText: '' as TranslateResult | string,
+        });
 
-        const pwdCheckValidation = new Validation((value, data) => data.password1 === value, 'please enter same value again');
-        const defaultValidation = {
-            timezone: [checkTimeZoneValidation()],
-        };
-
-        const addUserValidations = { ...defaultValidation };
-        const updateUserValidations = { ...defaultValidation };
-        const userIdVds = [requiredValidation(), noEmptySpaceValidation(), userIDValidation(context.parent)];
-
-        const pluginAuthIDValidation = () => new Validation(async (value) => {
-            let result = false;
-            await context.parent.$http.post('/identity/user/find', { search: { user_id: value }, domain_id: domain.state.domainId }).then((res) => {
-                if (res.data.total_count >= 1) {
-                    result = true;
-                    if (!formState.isLastCheck && res.data.total_count === 1) {
-                        const data = res.data.results[0];
-                        if (!formState.name) { formState.name = data.name; }
-                        if (!formState.email) { formState.email = data.email; }
-                        if (!formState.mobile) { formState.mobile = data.mobile; }
-                        if (!formState.group) { formState.group = data.group; }
-                    }
-                }
-            }).catch((error) => { console.error(error); });
-            return result;
-        }, "ID doesn't exists!");
-
-        if (!formState.is_local_auth) { // plugin auth type
-            addUserValidations.user_id = [...userIdVds, pluginAuthIDValidation(context.parent)];
-        } else {
-            addUserValidations.user_id = [...userIdVds];
-            addUserValidations.password1 = [requiredValidation(), noEmptySpaceValidation(), lengthMinValidation(5), lengthMaxValidation(12)];
-            addUserValidations.password2 = [requiredValidation(), pwdCheckValidation];
-
-            updateUserValidations.password1 = [lengthMinValidation(5), lengthMaxValidation(12)];
-            updateUserValidations.password2 = [
-                new Validation((value, data) => data.password1 === value, 'please enter same value again'),
-            ];
-        }
-
-        const validateAPI = formValidation(formState, props.updateMode ? updateUserValidations : addUserValidations);
-
+        /* util */
         const checkUserID = async () => {
-            const result = await validateAPI.fieldValidation('user_id');
-            return result;
-        };
-        const confirm = async () => {
-            formState.isLastCheck = true;
-            const result = await validateAPI.allValidation();
-            formState.isLastCheck = false;
+            validationState.isUserIdValid = undefined;
+            validationState.userIdInvalidText = '';
 
-            if (result) {
-                const data = {};
-                if (formState.is_local_auth) {
-                    if (result) {
-                        if (props.updateMode) {
-                            if (formState.password1) {
-                                data.password = formState.password1;
-                            }
-                        } else {
-                            data.password = formState.password1;
-                        }
-                    }
+            if (formState.user_id) {
+                if (formState.user_id.replace(/ /g, '').length !== formState.user_id.length) {
+                    validationState.isUserIdValid = false;
+                    validationState.userIdInvalidText = vm.$t('IDENTITY.USER.FORM.EMPTY_SPACE_INVALID');
+                    return;
                 }
-                ['user_id', 'name', 'email', 'mobile', 'group', 'language', 'timezone'].forEach((key) => {
-                    if (formState[key]) {
-                        data[key] = formState[key];
-                    }
-                });
-                dictRef.value.allValidation();
-                data.tags = dictRef.value.getDict();
-                context.emit('confirm', data);
+                if (!state.isInternalAuth) {
+                    await SpaceConnector.client.identity.user.find({
+                        search: { user_id: formState.user_id },
+                        domain_id: store.state.domain.domainId,
+                    }).catch(() => {
+                        validationState.isUserIdValid = false;
+                        validationState.userIdInvalidText = vm.$t('IDENTITY.USER.FORM.USER_ID_NOT_EXIST');
+                    });
+                }
+                await SpaceConnector.client.identity.user.get({ user_id: formState.user_id })
+                    .then(() => {
+                        validationState.isUserIdValid = false;
+                        validationState.userIdInvalidText = vm.$t('IDENTITY.USER.FORM.USER_ID_DUPLICATED');
+                    })
+                    .catch(() => {});
+                if (typeof validationState.isUserIdValid !== 'boolean') validationState.isUserIdValid = true;
+            } else {
+                validationState.isUserIdValid = false;
+                validationState.userIdInvalidText = vm.$t('IDENTITY.USER.FORM.REQUIRED_FIELD');
+            }
+        };
+        const checkPassword = () => {
+            // password1
+            if (!formState.password) {
+                validationState.isPasswordValid = false;
+                validationState.passwordInvalidText = vm.$t('IDENTITY.USER.FORM.REQUIRED_FIELD');
+            } else if (formState.password.replace(/ /g, '').length !== formState.password.length) {
+                validationState.isPasswordValid = false;
+                validationState.passwordInvalidText = vm.$t('IDENTITY.USER.FORM.EMPTY_SPACE_INVALID');
+            } else if (formState.password.length < 5) {
+                validationState.isPasswordValid = false;
+                validationState.passwordInvalidText = vm.$t('IDENTITY.USER.FORM.MIN_LENGTH_INVALID', { min: 5 });
+            } else if (formState.password.length > 12) {
+                validationState.isPasswordValid = false;
+                validationState.passwordInvalidText = vm.$t('IDENTITY.USER.FORM.MAX_LENGTH_INVALID', { max: 12 });
+            } else {
+                validationState.isPasswordValid = true;
+                validationState.passwordInvalidText = '';
+            }
+
+            // password2
+            if (!formState.passwordCheck) {
+                validationState.isPasswordCheckValid = false;
+                validationState.passwordCheckInvalidText = vm.$t('IDENTITY.USER.FORM.REQUIRED_FIELD');
+            } else if (formState.password !== formState.passwordCheck) {
+                validationState.isPasswordCheckValid = false;
+                validationState.passwordCheckInvalidText = vm.$t('IDENTITY.USER.FORM.PASSWORD_CHECK_INVALID');
+            } else {
+                validationState.isPasswordCheckValid = true;
+                validationState.passwordCheckInvalidText = '';
             }
         };
 
+        const confirm = async () => {
+            if (!props.updateMode) {
+                await checkUserID();
+                if (!validationState.isUserIdValid) {
+                    return;
+                }
+            }
+
+            if (state.isInternalAuth) {
+                await checkPassword();
+                if (!validationState.isPasswordValid || !validationState.isPasswordCheckValid) {
+                    return;
+                }
+            }
+
+            const data = {} as any;
+            if (state.isInternalAuth) {
+                if (props.updateMode) {
+                    if (formState.password) {
+                        data.password = formState.password;
+                    }
+                } else {
+                    data.password = formState.password;
+                }
+            }
+            ['user_id', 'name', 'email', 'mobile', 'group', 'language', 'timezone'].forEach((key) => {
+                if (formState[key]) {
+                    data[key] = formState[key];
+                }
+            });
+            state.tagInputRef.allValidation();
+            data.tags = state.tagInputRef.getDict();
+            emit('confirm', data);
+        };
+
+        const init = () => {
+            if (props.updateMode) {
+                formState.user_id = props.item.user_id;
+                formState.password = props.item.password1;
+                formState.passwordCheck = props.item.password2;
+                formState.name = props.item.name;
+                formState.email = props.item.email;
+                formState.mobile = props.item.mobile;
+                formState.group = props.item.group;
+                formState.language = props.item.language;
+                formState.timezone = props.item.timezone;
+                formState.tags = props.item.tags;
+            }
+        };
+        init();
+
         return {
             ...toRefs(state),
-            dictRef,
             formState,
-            languageSelectItems,
-            timezoneSelectItems,
-            proxyVisible: makeProxy('visible', props, context.emit),
+            validationState,
             confirm,
-            ...validateAPI,
             checkUserID,
         };
     },
@@ -317,6 +337,7 @@ export default {
             padding-bottom: 0.25rem;
         }
         .bottom-part {
+            padding-bottom: 2rem;
             .bottom-left-part {
                 display: inline-grid;
                 width: 50%;

@@ -25,7 +25,8 @@
 <script lang="ts">
 /* eslint-disable camelcase */
 import {
-    computed, reactive, toRefs, watch,
+    ComponentRenderProxy,
+    computed, getCurrentInstance, reactive, toRefs, watch,
 } from '@vue/composition-api';
 
 import PDynamicLayout from '@/components/organisms/dynamic-layout/PDynamicLayout.vue';
@@ -47,6 +48,8 @@ import config from '@/lib/config';
 import { store } from '@/store';
 import { Reference } from '@/lib/reference/type';
 import { referenceFieldFormatter } from '@/lib/reference/referenceFieldFormatter';
+import { TabItem } from '@/components/organisms/tabs/tab/type';
+import { find } from 'lodash';
 
 const defaultFetchOptions: DynamicLayoutFetchOptions = {
     sortBy: '',
@@ -82,6 +85,8 @@ export default {
         },
     },
     setup(props) {
+        const vm = getCurrentInstance() as ComponentRenderProxy;
+
         const layoutSchemaCacheMap = {};
         const fetchOptionsMap = {};
         const dataMap = {};
@@ -97,7 +102,13 @@ export default {
             language: computed(() => store.state.user.language),
 
             // button tab
-            tabs: computed<string[]>(() => state.layouts.map(d => d.name)),
+            tabs: computed<TabItem[]>(() => {
+                const local = vm.$i18n.locale;
+                return state.layouts.map(d => ({
+                    label: vm.$t(d.options?.translation_id, local) || d.name,
+                    name: d.name,
+                }));
+            }),
             activeTab: '',
 
             // schema
@@ -143,7 +154,7 @@ export default {
 
             layoutSchemaCacheMap[props.cloudServiceId] = layouts;
             state.layouts = layouts || [];
-            if (!state.tabs.includes(state.activeTab)) state.activeTab = state.tabs[0];
+            if (!find(state.tabs, { name: state.activeTab })) state.activeTab = state.tabs[0].name;
             if (state.currentLayout.options?.search) setSearchOptions();
         };
 
