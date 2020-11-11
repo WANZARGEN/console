@@ -1,23 +1,23 @@
 <template>
     <div>
-        <p-tree-node :data="$t('PROJECT.LANDING.ALL_PROJECT')" :state.sync="treeAllState"
-                     disable-toggle
-                     @row:click="resetSelectedNodes"
-        >
-            <template #left-extra>
-                <p-i name="ic_tree_all-projects" width="1rem" height="1rem"
-                     class="all-project-button" color="inherit"
-                />
-            </template>
-        </p-tree-node>
+        <!--        <p-tree-node :data="$t('PROJECT.LANDING.ALL_PROJECT')" :state.sync="treeAllState"-->
+        <!--                     disable-toggle-->
+        <!--                     @row:click="resetSelectedNodes"-->
+        <!--        >-->
+        <!--            <template #left-extra>-->
+        <!--                <p-i name="ic_tree_all-projects" width="1rem" height="1rem"-->
+        <!--                     class="all-project-button" color="inherit"-->
+        <!--                />-->
+        <!--            </template>-->
+        <!--        </p-tree-node>-->
 
-        <p-tree :fetcher="treeFetcher">
-            <template #data="{data}">
-                {{ data.name }}
-            </template>
-            <template #toggle="{state, toggleSize}">
-                <p-i v-if="state.loading" name="ic_working" :width="toggleSize"
-                     :height="toggleSize"
+        <p-tree :fetcher="treeFetcher" :data-formatter="treeDataFormatter"
+                @row-mouseenter="onHoverItem(...arguments, true)"
+                @row-mouseleave="onHoverItem(...arguments, false)"
+        >
+            <template #toggle="{props, node}">
+                <p-i v-if="node.loading" name="ic_working" :width="props.toggleSize"
+                     :height="props.toggleSize"
                 />
             </template>
             <template #toggle-right>
@@ -25,8 +25,8 @@
                      width="1rem" height="1rem" color="inherit transparent"
                 />
             </template>
-            <template #right-extra="{data}">
-                <div v-if="hoveredNode && data.id === hoveredNode.node.data.id">
+            <template #right-extra="{props}">
+                <div v-if="hoveredNode && props.data.id === hoveredNode.data.id">
                     <p-icon-button name="ic_plus" class="group-add-btn"
                                    width="1rem" height="1rem"
                                    @click.stop="$emit('create', hoveredNode)"
@@ -88,9 +88,18 @@ import { fluentApi } from '@/lib/fluent-api';
 import PIconButton from '@/components/molecules/buttons/icon-button/PIconButton.vue';
 import { ProjectGroup, ProjectTreeItem } from '@/views/project/project/modules/ProjectSearch.toolset';
 import PTree from '@/components/organisms/tree/PTree.vue';
-import { TreeNode } from '@/components/molecules/tree-node/type';
-import {SpaceConnector} from "@/lib/space-connector";
+import { DataFormatter, TreeNode, TreeNodeEventHandler } from '@/components/molecules/tree-node-2/type';
+import { SpaceConnector } from '@/lib/space-connector';
+import { Fetcher } from '@/components/organisms/tree/type';
 
+interface ProjectItem {
+    id: string;
+    item_type: 'ROOT'|'PROJECT_GROUP'|'PROJECT';
+    name: string;
+    has_child: boolean;
+}
+
+type ProjectNode = TreeNode<ProjectItem>
 
 export default {
     name: 'ProjectGroupTree',
@@ -152,15 +161,15 @@ export default {
                 selected: !treeApiHandler.ts.metaState.firstSelectedNode,
                 expanded: false,
             })),
-            hoveredNode: (null as (ProjectTreeItem|null)),
+            hoveredNode: null as (ProjectNode|null),
         });
 
 
-        const onHoverItem = (item: ProjectTreeItem, matched, e, isHovered: boolean) => {
+        const onHoverItem: TreeNodeEventHandler<ProjectItem> = (node, matched, e, isHovered: boolean) => {
             // formState.isRoot = false;
             // state.isHover = isHovered;
             // state.hoveredId = item.node.data.id;
-            state.hoveredNode = isHovered ? item : null;
+            state.hoveredNode = isHovered ? node : null;
         };
 
         const deleteSelectedNode = () => {
@@ -175,7 +184,7 @@ export default {
             };
         };
 
-        const addNode = async (item: ProjectItemResp, parentNode: null|ProjectTreeItem) => {
+        const addNode = async (item: ProjectNode, parentNode: null|ProjectTreeItem) => {
             const newNode = getDefaultNode(item, {
                 children: item.has_child,
                 state: {
@@ -204,13 +213,35 @@ export default {
             await treeApiHandler.getData();
         };
 
-        listNodes();
+        // listNodes();
 
 
-        const treeFetcher = async (node: TreeNode) => {
-            const res = await SpaceConnector.client.identity.project.tree();
-            return res;
+        const treeFetcher: Fetcher = async (node?: ProjectNode) => {
+            const params: any = {
+                item_type: 'ROOT',
+                exclude_type: 'PROJECT',
+                sort: {
+                    key: 'name',
+                    desc: false,
+                },
+            };
+            if (node) {
+                params.item_type = 'PROJECT_GROUP';
+                params.item_id = node.data.id;
+            }
+
+            try {
+                const res = await SpaceConnector.client.identity.project.tree(params);
+                return res.items as any[];
+            } catch (e) {
+                console.error(e);
+                return [];
+            }
         };
+
+
+        const treeDataFormatter: DataFormatter<ProjectItem> = node => node.data.name;
+
         return {
             treeApiHandler,
             ...toRefs(state),
@@ -223,32 +254,31 @@ export default {
             findNode,
             listNodes,
             treeFetcher,
+            treeDataFormatter,
         };
     },
 };
 </script>
 
 <style lang="postcss" scoped>
-    ::v-deep .basic {
-        @apply mx-3 mt-1;
+::v-deep .basic {
+    @apply mx-3 mt-1;
+}
+.all-project-button {
+    @apply mr-1;
+}
+.project-group-icon {
+    @apply mx-1;
+}
+.group-add-btn {
+    @apply float-right mr-1;
+    max-width: 1.5rem;
+    max-height: 1.5rem;
+    min-width: 1.5rem;
+    min-height: 1.5rem;
+    &:hover {
+        @apply bg-blue-300 border-blue-300;
+        color: inherit;
     }
-    .all-project-button {
-        @apply mr-1;
-    }
-    .project-group-icon {
-        @apply mx-1;
-    }
-    .group-add-btn {
-         @apply float-right mr-1;
-         max-width: 1.5rem;
-         max-height: 1.5rem;
-         min-width: 1.5rem;
-         min-height: 1.5rem;
-         &:hover {
-             color: inherit;
-         }
-         &:hover {
-             @apply bg-blue-300 border-blue-300;
-         }
-     }
+}
 </style>

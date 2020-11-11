@@ -63,7 +63,10 @@ module.exports = {
           "repository_id",
           "translation_id",
           "key_path",
-          "root_path"
+          "root_path",
+          "exclude_type",
+          "has_child",
+          "item_id"
         ]
       }
     ],
