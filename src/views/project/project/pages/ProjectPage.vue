@@ -22,9 +22,10 @@
                         </p-button>
                     </header>
                     <project-group-tree ref="treeRef"
+                                        :group-id="findTreeGroupId"
                                         @select="onSelectTreeItem"
                                         @create="openProjectGroupForm"
-                                        @list="onProjectGroupList"
+                                        @load-finish="onTreeLoadFinish"
                     />
                 </div>
             </div>
@@ -181,7 +182,7 @@
             <s-project-group-create-form-modal v-if="projectGroupFormVisible"
                                                :id="updateMode && searchedProjectGroup ?
                                                    searchedProjectGroup.id : undefined"
-                                               :parent="createTargetNode ? createTargetNode.node.data
+                                               :parent="createTargetNode ? createTargetNode.data
                                                    : null"
                                                :visible.sync="projectGroupFormVisible"
                                                :update-mode="updateMode"
@@ -246,10 +247,6 @@ import {
     makeQueryStringComputeds,
 } from '@/lib/router-query-string';
 import ProjectSearch from '@/views/project/project/modules/ProjectSearch.vue';
-import {
-    ProjectGroup,
-    ProjectTreeItem, SearchResult,
-} from '@/views/project/project/modules/ProjectSearch.toolset';
 import ProjectGroupTree from '@/views/project/project/modules/ProjectGroupTree.vue';
 import PButton from '@/components/atoms/buttons/PButton.vue';
 import PDropdownMenuBtn from '@/components/organisms/dropdown/dropdown-menu-btn/PDropdownMenuBtn.vue';
@@ -258,8 +255,9 @@ import { Location } from 'vue-router';
 import { getAllPage } from '@/components/organisms/paginations/text-pagination/helper';
 import { QueryHelper, SpaceConnector } from '@/lib/space-connector';
 import { getPageStart } from '@/lib/component-utils/pagination';
-import { ListType, TimeStamp } from '@/models';
+import { TimeStamp } from '@/models';
 import VueI18n from 'vue-i18n';
+import { ProjectGroup, ProjectGroupSearchResult, ProjectNode } from '@/views/project/project/type';
 
 import TranslateResult = VueI18n.TranslateResult;
 
@@ -310,10 +308,10 @@ interface ProjectSummaryResp {
     }
 
 
-const getParentGroup = (item: ProjectTreeItem, res: ProjectGroup[] = []): ProjectGroup[] => {
-    if (item) {
-        res.push(item.node.data);
-        if (item.parent) return getParentGroup(item.parent, res);
+const getParentGroup = (node: ProjectNode, res: ProjectGroup[] = []): ProjectGroup[] => {
+    if (node) {
+        res.push(node.data);
+        if (node.parent) return getParentGroup(node.parent, res);
         return res;
     }
     return res;
@@ -350,7 +348,7 @@ export default {
             ] as MenuItem[]),
             showAllProjects: false,
             searchedProjectGroup: null as ProjectGroup|null,
-            selectedTreeItem: null as ProjectTreeItem|null,
+            selectedTreeItem: null as ProjectNode|null,
             parentGroups: computed<ProjectGroup[]>(() => {
                 if (state.selectedTreeItem && state.selectedTreeItem.parent) {
                     return reverse(getParentGroup(state.selectedTreeItem.parent));
@@ -377,6 +375,8 @@ export default {
                 ];
             }),
             noProjectGroup: false,
+            isPageInit: true,
+            findTreeGroupId: undefined as undefined|null|string,
         });
 
         const formState = reactive({
@@ -387,7 +387,7 @@ export default {
             themeColor: '',
             modalContent: '' as unknown as TranslateResult,
             updateMode: false,
-            createTargetNode: null as ProjectTreeItem|null,
+            createTargetNode: null as ProjectNode|null,
         });
 
         const { provider } = useStore();
@@ -565,7 +565,7 @@ export default {
             formState.projectGroupFormVisible = true;
         };
 
-        const openProjectGroupForm = (createTargetNode: ProjectTreeItem|null) => {
+        const openProjectGroupForm = (createTargetNode: ProjectNode|null) => {
             formState.updateMode = false;
             formState.createTargetNode = createTargetNode;
             formState.projectGroupFormVisible = true;
@@ -577,23 +577,22 @@ export default {
             formState.projectGroupFormVisible = false;
         };
         const onProjectGroupCreate = async (item: ProjectGroup) => {
-            const newItem: ProjectItemResp = {
+            await state.treeRef.addNode({
                 ...item,
                 item_type: 'PROJECT_GROUP',
                 has_child: false,
-            };
-
-            await state.treeRef.addNode(newItem, formState.createTargetNode);
+            }, formState.createTargetNode);
             formState.projectGroupFormVisible = false;
             state.noProjectGroup = false;
         };
 
-        const onProjectGroupNavClick = async (item: {name: string; data: ProjectGroup}) => {
+        const onProjectGroupNavClick = (item: {name: string; data: ProjectGroup}) => {
             if (item.data) {
-                state.searchedProjectGroup = item.data;
-                await state.treeRef.findNode(item.data.id);
+                // eslint-disable-next-line no-use-before-define
+                setSearchedProjectGroup(item.data);
+                state.findTreeGroupId = item.data.id;
             } else {
-                await state.treeRef.listNodes();
+                state.findTreeGroupId = null;
             }
         };
 
@@ -623,97 +622,81 @@ export default {
         };
 
         /** Query String */
-        const queryRefs = {
-            ...makeQueryStringComputeds(state, {
-                searchedProjectGroup: {
-                    key: 'select_pg',
-                    getter: (item: null|ProjectGroup) => {
-                        if (item) return item.id;
-                        return null;
-                    },
-                    disableSetter: true,
-                },
-            }),
-            // search: makeQueryStringComputed(ref(undefined), {
-            //     key: 'search',
-            // }),
+        const replaceQueryString = (value: string|null = null) => {
+            vm.$router.replace({ query: { select_pg: value } }).catch(() => {});
         };
 
         /** Search */
-        const onSearch = async (res: SearchResult) => {
+        const setSearchedProjectGroup = (item: ProjectGroup|null) => {
+            state.searchedProjectGroup = item;
+            replaceQueryString(item?.id);
+        };
+
+        const onSearch = async (res: ProjectGroupSearchResult) => {
             listState.loading = true;
 
             if ((res.projectGroup && !state.searchedProjectGroup)
                 || (res.projectGroup && state.searchedProjectGroup && res.projectGroup.id !== state.searchedProjectGroup.id)) {
-                await state.treeRef.findNode(res.projectGroup.id);
+                state.findTreeGroupId = res.projectGroup.id;
             } else if (!res.projectGroup && state.searchedProjectGroup) {
-                await state.treeRef.listNodes();
+                state.findTreeGroupId = null;
             }
-            state.searchedProjectGroup = res.projectGroup;
-            state.searchText = res.value;
-            state.searchedProjectGroup = res.projectGroup;
-            await listProjects();
 
-            // queryRefs.search.value = res.value;
+            setSearchedProjectGroup(res.projectGroup);
+            state.searchText = res.value;
+            setSearchedProjectGroup(res.projectGroup);
         };
 
-        const onSelectTreeItem = async (e: ProjectTreeItem|null) => {
-            state.selectedTreeItem = e;
-            if (e) {
-                state.searchedProjectGroup = {
-                    id: e.node.data.id,
-                    name: e.node.data.name,
-                };
+        const onSelectTreeItem = async (node: ProjectNode|null) => {
+            state.selectedTreeItem = node;
+            if (node) {
+                setSearchedProjectGroup({
+                    id: node.data.id,
+                    name: node.data.name,
+                });
                 await listProjects();
             } else {
-                state.searchedProjectGroup = null;
+                setSearchedProjectGroup(null);
                 await listProjects();
             }
         };
 
 
-        const init = async () => {
-            // set search text by query string
+        const onTreeLoadFinish = async () => {
+            await listProjects();
+        };
+
+
+        /** init */
+        (async () => {
+            /* set search text by query string */
             state.searchText = vm.$route.query.search as string;
 
-            // set searched project group by query string
+            /* set searched project group by query string */
             const pgId = vm.$route.query.select_pg as string|null;
             let projectGroup: ProjectGroup|null = null;
             if (pgId) {
-                const res = await SpaceConnector.client.identity.projectGroup.get({
-                    project_group_id: pgId,
-                });
+                try {
+                    const res = await SpaceConnector.client.identity.projectGroup.get({
+                        project_group_id: pgId,
+                    });
 
-                projectGroup = {
-                    id: pgId,
-                    name: res.name,
-                };
+                    projectGroup = {
+                        id: pgId,
+                        name: res.name,
+                    };
+                } catch (e) {
+                    console.error(e);
+                    vm.$router.replace({ query: { select_pg: null } }).catch(() => {});
+                }
             }
-            state.searchedProjectGroup = projectGroup;
 
-            // init tree-node nodes
-            if (projectGroup) await state.treeRef.findNode(projectGroup.id);
-            else await state.treeRef.listNodes();
+            /* init tree-node nodes */
+            state.findTreeGroupId = projectGroup?.id || null;
 
-            // init project data
-            state.searchedProjectGroup = projectGroup;
-            await listProjects();
-        };
-
-        const onProjectGroupList = async (items: ProjectTreeItem[]) => {
-            if (items.length === 0) {
-                listState.loading = true;
-                state.noProjectGroup = true;
-            } else {
-                state.noProjectGroup = false;
-            }
-            listState.loading = false;
-            await listProjects();
-        };
-
-        onMounted(async () => {
-            await init();
-        });
+            /* init project data */
+            setSearchedProjectGroup(projectGroup);
+        })();
 
         return {
             listState,
@@ -736,7 +719,7 @@ export default {
             onProjectGroupUpdate,
             onProjectGroupCreate,
             onProjectGroupNavClick,
-            onProjectGroupList,
+            onTreeLoadFinish,
         };
     },
 };

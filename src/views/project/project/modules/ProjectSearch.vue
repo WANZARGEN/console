@@ -213,7 +213,6 @@ export default {
             return '';
         };
 
-        // const projectGroupApi = fluentApi.identity().projectGroup().get();
         const projectGroupListApi = fluentApi.identity().projectGroup().list()
             .setPageSize(LIMIT)
             .setOnly('project_group_id', 'name');
@@ -223,10 +222,6 @@ export default {
         const projectListApi = fluentApi.identity().project().list()
             .setPageSize(LIMIT);
 
-        // const getProjectGroup = async (): Promise<ProjectGroupInfo> => {
-        //     const res = await projectGroupApi.setId(props.projectGroupId).execute();
-        //     return res.data;
-        // };
 
         const listProjectGroups = async () => {
             let api = projectGroupListApi;
@@ -372,7 +367,7 @@ export default {
         .menu-container {
             @apply pr-4;
             .p-context-menu {
-                /*min-height: 2rem;*/
+                /* min-height: 2rem; */
             }
         }
     }

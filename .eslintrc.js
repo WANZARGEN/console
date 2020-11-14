@@ -66,7 +66,8 @@ module.exports = {
           "root_path",
           "exclude_type",
           "has_child",
-          "item_id"
+          "item_id",
+          "open_path"
         ]
       }
     ],
@@ -114,6 +115,7 @@ module.exports = {
       "error",
       { allows: ["protected", "public"] }
     ],
+    "@typescript-eslint/no-use-before-define": ["off"], // use eslint rule
     "@typescript-eslint/camelcase": ["off"], // use eslint camelcase rule
     "@typescript-eslint/no-empty-function": ["off"], // use eslint no-empty-function rule
     "@typescript-eslint/ban-ts-ignore": ["off"],

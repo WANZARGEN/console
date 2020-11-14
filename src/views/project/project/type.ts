@@ -1,4 +1,5 @@
 import { TimeStamp } from '@/models';
+import {TreeNode} from "@/components/molecules/tree-node-2/type";
 
 export interface ProjectGroupInfo {
     // eslint-disable-next-line camelcase
@@ -38,4 +39,27 @@ export interface ProjectItemResp {
     // eslint-disable-next-line camelcase
     has_child: boolean;
     item_type: 'PROJECT_GROUP'|'PROJECT';
+}
+
+export interface ProjectItem {
+    id: string;
+    item_type: 'ROOT'|'PROJECT_GROUP'|'PROJECT';
+    name: string;
+    has_child: boolean;
+}
+
+export type ProjectNode = TreeNode<ProjectItem>
+
+export interface TreeSearchResp {
+    open_path: string[];
+}
+
+export interface ProjectGroup {
+    id: string;
+    name: string;
+}
+
+export interface ProjectGroupSearchResult {
+    projectGroup: ProjectGroup|null;
+    value: string;
 }
