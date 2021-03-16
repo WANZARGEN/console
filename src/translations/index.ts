@@ -1,15 +1,15 @@
+/* eslint-disable import/no-unresolved */
 import Vue from 'vue';
 import VueI18n, { LocaleMessageObject } from 'vue-i18n';
-import axios from 'axios';
 
+// @ts-ignore
+import ko from '@lang/ko.json';
+// @ts-ignore
+import en from '@lang/en.json';
+// @ts-ignore
+import ja from '@lang/ja.json';
 
-import ko from '@/translations/language-pack/ko.json';
-import en from '@/translations/language-pack/en.json';
-import ja from '@/translations/language-pack/ja.json';
-import componentKO from '@spaceone/design-system/src/translations/language-pack/ko.json';
-import componentEN from '@spaceone/design-system/src/translations/language-pack/en.json';
-import componentJA from '@spaceone/design-system/src/translations/language-pack/ja.json';
-
+import { messages } from '@spaceone/design-system';
 
 Vue.use(VueI18n);
 
@@ -27,9 +27,9 @@ export const i18n = new VueI18n({
     locale: 'en', // set locale
     fallbackLocale: 'en',
     messages: {
-        en: removeEmpty({ ...en, COMPONENT: componentEN }),
-        ko: removeEmpty({ ...ko, COMPONENT: componentKO }),
-        jp: removeEmpty({ ...ja, COMPONENT: componentJA }),
+        en: removeEmpty({ ...en, ...messages.en }),
+        ko: removeEmpty({ ...ko, ...messages.ko }),
+        jp: removeEmpty({ ...ja, ...messages.jp }),
     },
     silentFallbackWarn: true,
 });

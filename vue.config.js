@@ -57,7 +57,8 @@ module.exports = {
         resolve: {
             symlinks: false,
             alias: {
-                '@vue/composition-api': path.resolve(path.join(__dirname, './node_modules/@vue/composition-api/')),
+                '@vue/composition-api': path.resolve(__dirname, './node_modules/@vue/composition-api/'),
+                '@lang': path.resolve(__dirname, process.env.VUE_APP_LANG_PATH || './src/translations/language-pack/'),
             },
         },
         plugins: [
