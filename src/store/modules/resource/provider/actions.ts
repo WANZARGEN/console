@@ -1,6 +1,7 @@
 import { SpaceConnector } from '@/lib/space-connector';
 import { ResourceMap } from '@/store/modules/resource/type';
 import { indigo } from '@/styles/colors';
+import config from '@/lib/config';
 
 const SPECIAL_LABEL_MAP = {
     // eslint-disable-next-line camelcase
@@ -21,10 +22,14 @@ export const load = async ({ commit, state }, lazyLoad = false): Promise<void|Er
         const providers: ResourceMap = {};
 
         response.results.forEach((providerInfo: any): void => {
+            // TODO: remove after backend ready
+            let icon: string = providerInfo.tags.icon || '';
+            icon = icon.split('console-assets/')[1];
+
             providers[providerInfo.provider] = {
                 label: SPECIAL_LABEL_MAP[providerInfo.provider] || providerInfo.name,
                 name: providerInfo.name,
-                icon: providerInfo.tags.icon,
+                icon: `${config.get('ASSETS.ENDPOINT')}/${icon}`,
                 color: providerInfo.tags.color || indigo[400],
                 linkTemplate: providerInfo.tags.external_link_template,
             };
