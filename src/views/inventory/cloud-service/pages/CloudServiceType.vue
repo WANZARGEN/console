@@ -115,7 +115,7 @@
                                          class="item-wrapper"
                             >
                                 <p-lazy-img width="3rem" height="3rem"
-                                            :src="item.icon || (providers[item.provider] ? providers[item.provider].icon : '')"
+                                            :src="assetUrlConverter(item.icon) || (providers[item.provider] ? providers[item.provider].icon : '')"
                                             error-icon="ic_provider_other"
                                             :alt="item.name"
                                             class="icon"
@@ -173,7 +173,7 @@
 /* eslint-disable camelcase */
 import { Location } from 'vue-router';
 import {
-    zipObject, debounce, range, sortBy, forEach,
+    zipObject, debounce, range,
 } from 'lodash';
 import axios, { CancelTokenSource } from 'axios';
 
@@ -205,6 +205,7 @@ import { FavoriteItem } from '@/store/modules/favorite/type';
 import FavoriteButton from '@/common/modules/FavoriteButton.vue';
 import { QueryHelper } from '@/lib/query';
 import { QueryStoreFilter } from '@/lib/query/type';
+import { assetUrlConverter } from '@/lib/util';
 
 
 interface RegionModel extends Tags {
@@ -237,7 +238,7 @@ export default {
         PToolbox,
         PDataLoader,
     },
-    setup(props, context) {
+    setup() {
         const vm = getCurrentInstance() as ComponentRenderProxy;
         const queryHelper = new QueryHelper().setFiltersAsRawQueryString(vm.$route.query.filters);
 
@@ -552,6 +553,7 @@ export default {
             skeletons: range(5),
             onPaginationChange,
             onChange,
+            assetUrlConverter,
         };
     },
 };

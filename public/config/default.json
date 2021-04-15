@@ -17,7 +17,6 @@
     "ALL": false,
     "ENDPOINT": ""
   },
-  "ASSETS": {
-    "ENDPOINT": "https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets"
+  "ASSET_PATH": {
   }
 }

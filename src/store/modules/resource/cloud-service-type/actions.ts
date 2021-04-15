@@ -1,6 +1,6 @@
 import { SpaceConnector } from '@/lib/space-connector';
 import { ResourceMap } from '@/store/modules/resource/type';
-import config from '@/lib/config';
+import { assetUrlConverter } from '@/lib/util';
 
 export const load = async ({ state, commit }, lazyLoad = false): Promise<void|Error> => {
     if (lazyLoad && Object.keys(state.items).length > 0) return;
@@ -13,14 +13,10 @@ export const load = async ({ state, commit }, lazyLoad = false): Promise<void|Er
         const cloudServiceTypes: ResourceMap = {};
 
         response.results.forEach((cloudServiceTypeInfo: any): void => {
-            // TODO: remove after backend ready
-            let icon: string = cloudServiceTypeInfo.tags['spaceone:icon'] || '';
-            icon = icon.split('console-assets/')[1];
-
             cloudServiceTypes[cloudServiceTypeInfo.cloud_service_type_id] = {
                 label: `${cloudServiceTypeInfo.group} > ${cloudServiceTypeInfo.name}`,
                 name: cloudServiceTypeInfo.name,
-                icon: `${config.get('ASSETS.ENDPOINT')}/${icon}`,
+                icon: assetUrlConverter(cloudServiceTypeInfo.tags['spaceone:icon']),
             };
         });
 
