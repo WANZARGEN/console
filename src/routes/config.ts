@@ -1,55 +1,45 @@
-// Views
-import ErrorPage from '@/common/pages/ErrorPage.vue';
-import SignOut from '@/common/pages/SignOut.vue';
-
-// Routes
-import signInRoute from '@/routes/sign-in/sign-in-route';
-import dashboardRoute from '@/routes/dashboard/dashboard-route';
-import identityRoute from '@/routes/identity/identity-route';
-import inventoryRoute from '@/routes/inventory/inventory-route';
-import pluginRoute from '@/routes/plugin/plugin-route';
-import projectRoute from '@/routes/project/project-route';
-import managementRoute from '@/routes/management/management-route';
-import automationRoute from '@/routes/automation/automation-route';
-import monitoringRoute from '@/routes/monitoring/monitoring-route';
 import { RouterOptions } from 'vue-router';
 
+const PowerSchedulerLandingPage = () => import(/* webpackChunkName: "PowerSchedulerLanding" */ '@/views/automation/power-scheduler/pages/PowerSchedulerLandingPage.vue');
+const PowerSchedulerPage = () => import(/* webpackChunkName: "PowerSchedulerPage" */ '@/views/automation/power-scheduler/pages/PowerSchedulerPage.vue');
+const ResourceGroupPage = () => import(/* webpackChunkName: "ResourceGroup" */ '@/views/automation/power-scheduler/pages/ResourceGroupPage.vue');
+
+const POWER_SCHEDULER_ROUTE = Object.freeze({
+    _NAME: 'powerSchedulerLanding',
+    ADD: { _NAME: 'powerScheduler' },
+    DETAIL: { _NAME: 'powerSchedulerDetail' },
+    RESOURCE_GROUP: { _NAME: 'powerSchedulerResourceGroup' },
+});
 
 export const routerOptions = {
     mode: 'history',
     linkActiveClass: 'open active',
     routes: [
         {
-            path: '/error-page',
-            name: 'error',
-            meta: { label: '', excludeAuth: true },
-            component: ErrorPage,
-        },
-        {
-            path: '/sign-out',
-            name: 'SignOut',
-            component: SignOut,
-            meta: { label: '', excludeAuth: true, isSignInPage: false },
-        },
-        signInRoute,
-        {
             path: '/',
-            name: 'root',
-            meta: { label: 'root' },
-            redirect: '/dashboard',
-            component: { template: '<router-view />' },
+            name: POWER_SCHEDULER_ROUTE._NAME,
+            component: PowerSchedulerLandingPage,
+        },
+        {
+            path: ':projectId',
+            name: POWER_SCHEDULER_ROUTE.ADD._NAME,
+            props: true,
+            component: PowerSchedulerPage,
+        },
+        {
+            path: ':projectId/:scheduleId',
+            name: POWER_SCHEDULER_ROUTE.DETAIL._NAME,
+            props: true,
+            component: PowerSchedulerPage,
             children: [
-                dashboardRoute,
-                identityRoute,
-                inventoryRoute,
-                pluginRoute,
-                projectRoute,
-                managementRoute,
-                automationRoute,
-                monitoringRoute,
+                {
+                    path: ':resourceGroupId',
+                    name: POWER_SCHEDULER_ROUTE.RESOURCE_GROUP._NAME,
+                    props: true,
+                    component: ResourceGroupPage,
+                },
             ],
         },
-        { path: '*', component: ErrorPage },
     ],
     duplicateNavigationPolicy: 'reload',
 } as RouterOptions;
