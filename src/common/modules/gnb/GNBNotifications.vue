@@ -1,7 +1,7 @@
 <template>
     <div class="gnb-notifications">
         <div class="top-wrapper">
-            <span class="title">Notifications</span>
+            <span class="title">{{ $t('COMMON.GNB.NOTIFICATION.TITLE') }}</span>
             <p-select-dropdown class="more-button" :items="moreMenuItems"
                                button-only button-icon="ic_more"
             />
@@ -17,11 +17,11 @@
             <div v-else-if="notifications.length === 0" class="no-data">
                 <img src="@/assets/images/illust_astronaut_radio.svg">
                 <p class="title">
-                    No Notifications
+                    {{ $t('COMMON.GNB.NOTIFICATION.NO_NOTIFICATION') }}
                 </p>
                 <p class="desc">
-                    <span>When you get notifications, </span>
-                    <span>they'll show up here.</span>
+                    <span>{{ $t('COMMON.GNB.NOTIFICATION.NO_NOTI_DESC_1') }}&nbsp;</span>
+                    <span>{{ $t('COMMON.GNB.NOTIFICATION.NO_NOTI_DESC_2') }}</span>
                 </p>
             </div>
             <template v-else>
