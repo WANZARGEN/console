@@ -11,6 +11,7 @@ export const getDashboardLayoutWidgetInfoList = (widgetList: WidgetTuple[]): Das
             const widgetConfig = getWidgetConfig(widgetId);
             const widgetConfigTitle = widgetConfig.title ?? widgetConfig.widget_config_id;
             const title = customInfo?.title ? (customInfo?.title ?? widgetConfigTitle) : widgetConfigTitle;
+            const widgetOptions = customInfo?.widget_options ? (customInfo?.widget_options ?? widgetConfig.options) : widgetConfig.options;
             const defaultProperties = widgetConfig.options_schema?.default_properties ?? [];
             const requiredProperties = widgetConfig.options_schema?.schema.required ?? [];
             const inheritOptions: InheritOptions = {};
@@ -24,7 +25,7 @@ export const getDashboardLayoutWidgetInfoList = (widgetList: WidgetTuple[]): Das
                 widget_key: uuidv4(),
                 widget_name: widgetConfig.widget_config_id,
                 title,
-                widget_options: widgetConfig.options ?? {},
+                widget_options: widgetOptions ?? {},
                 size: widgetConfig.sizes[0],
                 version: '1',
                 inherit_options: inheritOptions,
