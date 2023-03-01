@@ -29,9 +29,12 @@ dist
 # Tests
 coverage/
 
-
 # Assets
 src/assets
 
 # Skaffold
 skaffold.yaml
+
+# Cypress
+cypress.env.json
+videos/

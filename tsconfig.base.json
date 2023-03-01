@@ -5,7 +5,6 @@
     "module": "ESNext",
     "strict": true,
     "jsx": "preserve",
-    "importHelpers": true,
     "moduleResolution": "Node",
     "allowJs": true,
     "esModuleInterop": true,

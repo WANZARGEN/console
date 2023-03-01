@@ -6,6 +6,7 @@ module.exports = {
     },
 
     extends: [
+        'plugin:cypress/recommended',
         'plugin:@typescript-eslint/recommended',
         'plugin:vue/recommended',
         'plugin:vue/base',
