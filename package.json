@@ -15,12 +15,11 @@
   },
   "devDependencies": {
     "eslint-config-custom": "*",
-    "turbo": "latest"
+    "turbo": "^1.8.3"
   },
   "engines": {
     "npm": ">=7.0.0",
     "node": ">=14.0.0"
   },
-  "dependencies": {},
   "packageManager": "npm@8.1.2"
 }
