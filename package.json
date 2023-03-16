@@ -8,14 +8,16 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
+    "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "turbo run format",
     "prepare": "node -e \"if(require('fs').existsSync('.git')){process.exit(1)}\" || is-ci || husky install"
   },
   "devDependencies": {
     "eslint-config-custom": "*",
-    "turbo": "^1.8.3"
+    "turbo": "^1.8.3",
+    "husky": "^7.0.4",
+    "lint-staged": "^11.2.6"
   },
   "engines": {
     "npm": ">=7.0.0",

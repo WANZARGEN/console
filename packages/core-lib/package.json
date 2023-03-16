@@ -4,11 +4,11 @@
   "description": "Cloudforet Console Core Library",
   "scripts": {
     "build": "npm run tsc",
-    "build:watch": "rimraf dist && npm run tsc:watch",
+    "dev": "rimraf dist && npm run tsc:watch",
     "tsc": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "tsc:watch": "tsc-watch --project . --outDir ./dist --onSuccess \"tsc-alias -w\"",
-    "eslint": "eslint --ext .js,.ts src",
-    "eslint:fix": "eslint --fix --ext .js,.ts src",
+    "lint": "eslint --ext .js,.ts src",
+    "format": "eslint --fix --ext .js,.ts src",
     "test:unit": "vitest run",
     "test:unit:watch": "vitest watch --ui"
   },

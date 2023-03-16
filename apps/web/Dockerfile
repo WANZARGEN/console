@@ -24,7 +24,7 @@ COPY packages ${BUILD_PATH}/packages
 
 RUN npm install
 
-COPY tsconfig.base.json tsconfig.json ${BUILD_PATH}/
+COPY tsconfig.json ${BUILD_PATH}/
 COPY vite.config.js ${BUILD_PATH}/
 ENV NODE_ENV production
 

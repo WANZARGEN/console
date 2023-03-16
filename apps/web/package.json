@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "NODE_OPTIONS=--max_old_space_size=8192 vite build",
-    "preview": "npm run build && vite preview",
+    "preview": "vite preview",
     "test:unit": "vitest run",
     "test:unit:watch": "vitest watch --ui",
     "test:coverage": "vitest run --coverage",
@@ -104,9 +104,7 @@
     "dotenv": "^16.0.3",
     "fsevents": "2.3.2",
     "https-proxy-agent": "^2.2.4",
-    "husky": "^7.0.4",
     "jsdom": "^20.0.1",
-    "lint-staged": "^11.2.6",
     "postcss": "^8.3.1",
     "postcss-cli": "^8.3.1",
     "postcss-comment": "^2.0.0",
