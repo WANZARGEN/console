@@ -1,4 +1,6 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Base",
   "compilerOptions": {
     "experimentalDecorators": true,
     "target": "ES6",
@@ -14,8 +16,6 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "sourceMap": true,
-    "baseUrl": ".",
-    "types": ["vitest/globals"],
     "lib": [
       "esnext",
       "dom",
