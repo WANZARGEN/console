@@ -1,5 +1,5 @@
 
-<h1 align="center">Cloudforet Console</h1>  
+<h1 align="center">Cloudforet Web Console</h1>  
   
 <br/>  
 <div align="center" style="display:flex;">  
