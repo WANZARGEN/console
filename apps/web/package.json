@@ -78,6 +78,7 @@
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
+    "eslint-config-custom": "*",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/preset-env": "^7.19.1",
     "@commitlint/cli": "^14.1.0",
@@ -91,8 +92,6 @@
     "@types/numeral": "0.0.26",
     "@types/pdfmake": "^0.1.20",
     "@types/uuid": "^8.3.0",
-    "@typescript-eslint/eslint-plugin": "^5.41.0",
-    "@typescript-eslint/parser": "^5.41.0",
     "@vitejs/plugin-vue2": "^2.0.0",
     "@vitest/coverage-c8": "^0.24.3",
     "@vitest/ui": "^0.25.6",
@@ -100,11 +99,6 @@
     "autoprefixer": "^9.7.4",
     "axios-mock-adapter": "^1.17.0",
     "dotenv": "^16.0.3",
-    "eslint": "8.22.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-import-resolver-typescript": "^2.4.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-vue": "^9.4.0",
     "fsevents": "2.3.2",
     "https-proxy-agent": "^2.2.4",
     "husky": "^7.0.4",
