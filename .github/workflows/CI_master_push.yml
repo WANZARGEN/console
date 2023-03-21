@@ -3,8 +3,8 @@ on:
   push:
     paths-ignore:
       - '.github/**'
-      - 'deploy/helm/**'
-      - 'skaffold.template.yaml'
+      - '**/deploy/helm/**'
+      - '**/skaffold.template.yaml'
     branches:
       - master
 
@@ -30,7 +30,7 @@ jobs:
       - name: calculate_version
         id: job1
         run: |
-          echo "::set-output name=VERSION::$(cat src/VERSION | cut -c 2-).${{ env.TIME }}"
+          echo "::set-output name=VERSION::$(cat VERSION | cut -c 2-).${{ env.TIME }}"
 
   docker:
     if: github.repository_owner == 'cloudforet-io'
@@ -63,6 +63,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
+          file: ./apps/web/Dockerfile
           push: true
           tags: pyengine/${{ env.SERVICE }}:latest, pyengine/${{ env.SERVICE }}:${{ env.VERSION }}
           cache-from: pyengine/${{ env.SERVICE }}:latest
