@@ -100,7 +100,6 @@
     "autoprefixer": "^9.7.4",
     "axios-mock-adapter": "^1.17.0",
     "dotenv": "^16.0.3",
-    "fsevents": "2.3.2",
     "https-proxy-agent": "^2.2.4",
     "jsdom": "^20.0.1",
     "postcss": "^8.3.1",
