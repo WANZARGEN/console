@@ -1,9 +1,15 @@
-*.swp
-*.bak
-.git
-.gitignore
+# tests
+tests
+playwright
+
+# output
+dist
+
+#misc
+Dockerfile
 .dockerignore
 .eslintrc.cjs
-node_modules
-test
-dist
+.eslintignore
+.lintstagedrc.cjs
+playwright.config.ts
+skaffold.template.yaml

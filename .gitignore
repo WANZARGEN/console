@@ -15,3 +15,4 @@ node_modules.nosync/
 
 # Turborepo
 .turbo
+out/
