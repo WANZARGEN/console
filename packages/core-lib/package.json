@@ -9,8 +9,8 @@
     "tsc:watch": "tsc-watch --project . --outDir ./dist --onSuccess \"tsc-alias -w\"",
     "lint": "eslint --ext .js,.ts src",
     "format": "eslint --fix --ext .js,.ts src",
-    "test:unit": "vitest run",
-    "test:unit:watch": "vitest watch --ui"
+    "test": "vitest run",
+    "test:watch": "vitest watch --ui"
   },
   "repository": {
     "type": "git",

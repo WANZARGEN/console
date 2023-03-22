@@ -12,6 +12,9 @@
     },
     "format": {
       "outputs": []
+    },
+    "test": {
+      "outputs": []
     }
   }
 }
