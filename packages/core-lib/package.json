@@ -1,6 +1,6 @@
 {
   "name": "@cloudforet/core-lib",
-  "version": "1.11.0-8",
+  "version": "1.11.0-rc1",
   "description": "Cloudforet Console Core Library",
   "scripts": {
     "build": "npm run tsc",
