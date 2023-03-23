@@ -33,7 +33,7 @@ jobs:
           echo "::set-output name=VERSION::$(cat VERSION | cut -c 2-).${{ env.TIME }}"
 
   docker:
-    if: github.repository_owner == 'wanzargen'
+    if: github.repository_owner == 'cloudforet-io'
     needs: versioning
     runs-on: ubuntu-latest
     env:
@@ -68,8 +68,8 @@ jobs:
             TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
             TURBO_TEAM=${{ secrets.TURBO_TEAM }}
           push: true
-          tags: wanzargen/${{ env.SERVICE }}:latest, wanzargen/${{ env.SERVICE }}:${{ env.VERSION }}
-          cache-from: wanzargen/${{ env.SERVICE }}:latest
+          tags: pyengine/${{ env.SERVICE }}:latest, pyengine/${{ env.SERVICE }}:${{ env.VERSION }}
+          cache-from: pyengine/${{ env.SERVICE }}:latest
           cache-to: type=inline
         
 

@@ -110,7 +110,7 @@ jobs:
 
   docker:
     needs: [condition_check, update_local_version_file]
-    if: github.repository_owner == 'wanzargen'
+    if: github.repository_owner == 'cloudforet-io'
     runs-on: ubuntu-latest
     env:
       VERSION: ${{ needs.condition_check.outputs.TAG }}
@@ -151,31 +151,31 @@ jobs:
             TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
             TURBO_TEAM=${{ secrets.TURBO_TEAM }}
           push: true
-          tags: wanzargen/${{ env.SERVICE }}:${{ env.VERSION }}
-          cache-from: wanzargen/${{ env.SERVICE }}:latest
+          tags: spaceone/${{ env.SERVICE }}:${{ env.VERSION }}
+          cache-from: pyengine/${{ env.SERVICE }}:latest
 
-#      -
-#        name: Configure AWS credentials
-#        uses: aws-actions/configure-aws-credentials@v1
-#        with:
-#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#          aws-region: us-east-1
-#      -
-#        name: Login to Amazon ECR
-#        run: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.ECR_REPO }}
-#      -
-#        name: Build and push (ECR)
-#        uses: docker/build-push-action@v2
-#        with:
-#          context: .
-#          push: true
-#          tags: ${{ secrets.ECR_REPO }}/${{ env.SERVICE }}:latest, ${{ secrets.ECR_REPO }}/${{ env.SERVICE }}:${{ env.VERSION }}
-#          cache-from: pyengine/${{ env.SERVICE }}:latest
+      - 
+        name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - 
+        name: Login to Amazon ECR
+        run: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.ECR_REPO }}
+      -
+        name: Build and push (ECR)
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.ECR_REPO }}/${{ env.SERVICE }}:latest, ${{ secrets.ECR_REPO }}/${{ env.SERVICE }}:${{ env.VERSION }}
+          cache-from: pyengine/${{ env.SERVICE }}:latest
  
 
   notify_to_slack:
-    if: github.repository_owner == 'wanzargen'
+    if: github.repository_owner == 'cloudforet-io'
     needs: [condition_check, update_local_version_file, docker]
     runs-on: ubuntu-latest
     steps:
