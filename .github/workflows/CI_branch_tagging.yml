@@ -147,6 +147,9 @@ jobs:
         with:
           context: .
           file: ./apps/web/Dockerfile
+          build-args: |
+            TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
+            TURBO_TEAM=${{ secrets.TURBO_TEAM }}
           push: true
           tags: wanzargen/${{ env.SERVICE }}:${{ env.VERSION }}
           cache-from: wanzargen/${{ env.SERVICE }}:latest
