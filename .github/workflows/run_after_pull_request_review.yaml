@@ -1,4 +1,4 @@
-name: "[Workflow Run] After Review"
+name: "[Run] After PR Review"
 
 on:
   workflow_run:
