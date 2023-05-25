@@ -15,6 +15,7 @@ import { i18n } from '@/translations';
 import { resetStore } from '@/lib/reset-pinia-store';
 import { siteInit } from '@/lib/site-initializer';
 
+// test
 import App from './App.vue';
 
 import '@/styles/style.pcss';
