@@ -43,5 +43,9 @@ test.describe('Collector Create', () => {
             const searchedItems = await page.locator('.p-board-item').elementHandles()
             expect(searchedItems).toHaveLength(data.results.length > 10 ? 10 : data.results.length);
         })
+
+        await test.step('1.2 Click on the left side Provider and Repository radio buttons respectively -> Check the result list', async () => {
+            const PROVIDER = 'aws';
+        })
     })
 })
