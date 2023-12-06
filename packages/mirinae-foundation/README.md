@@ -1,4 +1,4 @@
-<h1 align="center">Cloudforet Console Front-end Utils</h1>  
+<h1 align="center">Mirinae(Cloudforet Design System) Foundation</h1>  
 
 <br/>
 

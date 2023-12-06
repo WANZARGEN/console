@@ -1,0 +1,29 @@
+{
+  "name": "@cloudforet/mirinae-react",
+  "version": "1.12.0-dev11",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "transpile": "tsc",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+  },
+  "dependencies": {
+    "@cloudforet/mirinae-foundation": "*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "eslint-config-custom": "*",
+    "tsconfig": "*",
+    "vite": "^5.0.0"
+  },
+  "author": "Cloudforet",
+  "license": "Apache-2.0",
+  "main": "./dist/mirinae.mjs",
+  "module": "./dist/mirinae.mjs",
+  "typings": "types/index.d.ts"
+}

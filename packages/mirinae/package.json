@@ -29,7 +29,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/cloudforet-io/mirinae.git"
+    "url": "https://github.com/cloudforet-io/console.git"
   },
   "publishConfig": {
     "access": "public"

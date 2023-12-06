@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     webFonts: [
         'Roboto:400,500,700',
         'Noto Sans:400,500,700',

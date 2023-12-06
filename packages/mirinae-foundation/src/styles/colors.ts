@@ -2,7 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { kebabCase, forEach } = require('lodash');
 
-const palette = {
+export const palette = {
     black: '#000000',
     white: '#FFFFFF',
     pointViolet: '#7545FF',
@@ -106,7 +106,7 @@ const palette = {
         900: '#0F4D4D',
     },
 };
-const colorSet = {
+export const colorSet = {
     transparent: 'transparent',
     black: palette.black,
     white: palette.white,
@@ -151,7 +151,7 @@ const colorSet = {
 };
 
 
-const semanticColors = {
+export const semanticColors = {
     primary: palette.violet[600],
     primaryDark: palette.violet[800],
     primary1: palette.violet[400],
@@ -166,21 +166,11 @@ const semanticColors = {
     safe: palette.green[600],
 };
 
-const kebabColors = {};
-forEach(semanticColors, (d, k) => { kebabColors[kebabCase(k)] = d; });
-forEach(colorSet, (d, k) => { kebabColors[kebabCase(k)] = d; });
+export const colors = {}; // kebabCase
+forEach(semanticColors, (d, k) => { colors[kebabCase(k)] = d; });
+forEach(colorSet, (d, k) => { colors[kebabCase(k)] = d; });
 
-
-module.exports = {
-    /* color sets */
-    tailwindColors: {
-        ...semanticColors,
-        ...kebabColors,
-    },
-    palette,
-    semanticColors,
-
-    /* colors */
+export const tailwindColors = {
     ...semanticColors,
-    ...colorSet,
+    ...colors,
 };

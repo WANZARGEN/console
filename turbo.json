@@ -20,10 +20,10 @@
       ],
       "cache": true
     },
-    "mirinae-foundation#build": {
-      "outputs": ["./dist/**", "./css/**"],
+    "@cloudforet/mirinae-foundation#build": {
+      "outputs": ["./dist/**"],
         "inputs": [
-          "src/**", "postcss.config.cjs", "tailwind.config.cjs",
+          "src/**",
           "package.json", "tsconfig.build.json", "vite.config.js",
           "!./**/__tests__/**", "!./**/LICENSE", "!./**/AUTHORS", "!./**/README.md", "!./**/CHANGELOG.md"
         ],
@@ -35,6 +35,15 @@
           "src/**", "postcss.config.cjs", "tailwind.config.cjs",
           "package.json", "tsconfig.build.json", "vite.config.js",
           "!./**/__tests__/**", "!./**/*.babel", "!./**/LICENSE", "!./**/AUTHORS", "!./**/README.md", "!./**/CHANGELOG.md"
+        ],
+      "cache": true
+    },
+    "@cloudforet/mirinae-react#build": {
+      "outputs": ["./dist/**"],
+        "inputs": [
+          "src/**",
+          "package.json", "tsconfig.build.json", "vite.config.js",
+          "!./**/__tests__/**", "!./**/LICENSE", "!./**/AUTHORS", "!./**/README.md", "!./**/CHANGELOG.md"
         ],
       "cache": true
     },
