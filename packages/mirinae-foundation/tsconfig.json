@@ -1,0 +1,16 @@
+{
+  "extends": "tsconfig/base.json",
+  "compilerOptions": {
+    "types": ["vitest/globals"],
+    "declaration": true,
+    "outDir": "dist",
+    "baseUrl": "./"
+  },
+  "include": [
+    "src",
+    "__tests__"
+  ],
+  "exclude": [
+    "dist"
+  ]
+}
