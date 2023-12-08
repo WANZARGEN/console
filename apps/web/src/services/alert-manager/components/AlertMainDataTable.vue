@@ -1,6 +1,16 @@
 <template>
     <fragment>
         <div class="alert-data-table">
+            <!--            <react-wrapper :component="SBadge"-->
+            <!--                           children="이건 테스트에요"-->
+            <!--                           :style-type="badgeStyleType"-->
+            <!--            >-->
+            <!--                &lt;!&ndash;                        {{ alertStateLabels[value] }}&ndash;&gt;-->
+            <!--            </react-wrapper>-->
+            <react-wrapper :component="HelloWorld"
+                           :title="title"
+                           :respond-function="respondFunction"
+            />
             <p-toolbox-table
                 searchable
                 selectable
@@ -141,10 +151,13 @@ import type { KeyItemSet } from '@cloudforet/core-lib/component-util/query-searc
 import { QueryHelper } from '@cloudforet/core-lib/query';
 import { SpaceConnector } from '@cloudforet/core-lib/space-connector';
 import { ApiQueryHelper } from '@cloudforet/core-lib/space-connector/helper';
+import { SBadge } from '@cloudforet/mirinae-react';
 import { durationFormatter, iso8601Formatter } from '@cloudforet/utils';
 
+import HelloWorld from '@/migration/components/HelloWorld';
 import { ALERT_STATE, ALERT_URGENCY } from '@/schema/monitoring/alert/constants';
 import { store } from '@/store';
+import { i18n } from '@/translations';
 
 import type { ProjectReferenceMap } from '@/store/modules/reference/project/type';
 import type { UserReferenceMap } from '@/store/modules/reference/user/type';
@@ -152,8 +165,10 @@ import type { WebhookReferenceMap } from '@/store/modules/reference/webhook/type
 
 import { FILE_NAME_PREFIX } from '@/lib/excel-export/constant';
 import { downloadExcel } from '@/lib/helper/file-download-helper';
+import { showSuccessMessage } from '@/lib/helper/notice-alert-helper';
 import { referenceRouter } from '@/lib/reference/referenceRouter';
 
+import ReactWrapper from '@/common/components/wrappers/ReactWrapper.vue';
 import ErrorHandler from '@/common/composables/error/errorHandler';
 
 import { red } from '@/styles/colors';
@@ -179,6 +194,7 @@ const DATE_TIME_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 export default {
     name: 'AlertMainDataTable',
     components: {
+        ReactWrapper,
         AlertMainAlertCreateModal,
         AlertMainDataTableTriggeredByField,
         AlertMainDataTableActions,
@@ -279,7 +295,22 @@ export default {
             }),
         });
 
+        // setInterval(() => {
+        //     state.badgeStyleType = state.badgeStyleType === 'yellow200' ? 'indigo100' : 'yellow200';
+        // }, 2000);
+        const respondFunction = async () => {
+            try {
+                const language = store.state.user.language === 'en' ? 'ko' : 'en';
+                await store.dispatch('user/setLanguage', language);
+                // state.title = `${store.state.user.language} Current Language: `;
+                showSuccessMessage(i18n.t('COMMON.GNB.ACCOUNT.ALT_S_UPDATE'), '');
+            } catch (e) {
+                ErrorHandler.handleRequestError(e, i18n.t('COMMON.GNB.ACCOUNT.ALT_E_UPDATE'));
+            }
+        };
         const state = reactive({
+            title: 'Current Language: ',
+            badgeStyleType: 'yellow200',
             loading: true,
             selectIndex: [] as number[],
             selectedItems: computed(() => state.selectIndex.map((d) => state.items[d])),
@@ -476,6 +507,9 @@ export default {
             onAlertFormConfirm,
             iso8601Formatter,
             alertDurationFormatter,
+            SBadge,
+            HelloWorld,
+            respondFunction,
         };
     },
 };

@@ -22,6 +22,8 @@ import '@/styles/style.pcss';
 // eslint-disable-next-line
 import '@spaceone/design-system/css/light-style.css';
 import '@spaceone/design-system/dist/style.css';
+import '@cloudforet/mirinae-react/dist/style.css';
+
 
 /** ********** SET VUE PLUGINS ************** */
 Vue.use(Fragment.Plugin);

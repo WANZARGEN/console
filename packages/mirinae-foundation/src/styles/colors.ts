@@ -1,6 +1,4 @@
-// const { colors } = require('tailwindcss/defaultTheme');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { kebabCase, forEach } = require('lodash');
+import { kebabCase, forEach } from 'lodash';
 
 export const palette = {
     black: '#000000',

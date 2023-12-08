@@ -1,6 +1,7 @@
 import path from 'path';
 import process from 'process';
 
+import react from '@vitejs/plugin-react-swc';
 import vuePlugin from '@vitejs/plugin-vue2';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig, loadEnv } from 'vite';
@@ -24,6 +25,7 @@ export default defineConfig(async ({ command, mode }) => {
         },
         plugins: [
             vuePlugin(),
+            react(),
             VueTypeImports(),
             StylelintPlugin({
                 include: ['src/**/*.{css,vue,pcss,scss}'],
