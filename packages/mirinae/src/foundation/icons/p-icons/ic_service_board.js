@@ -3,7 +3,7 @@
 // @ts-ignore
 import icon from 'vue-svgicon'
 icon.register({
-  'ic_workflow-board': {
+  'ic_service_board': {
     width: 18,
     height: 18,
     viewBox: '0 0 18 18',

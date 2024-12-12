@@ -3,7 +3,7 @@
 // @ts-ignore
 import icon from 'vue-svgicon'
 icon.register({
-  'ic_support-center': {
+  'ic_service_service-desk': {
     width: 18,
     height: 18,
     viewBox: '0 0 18 18',
