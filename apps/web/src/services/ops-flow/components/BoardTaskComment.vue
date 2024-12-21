@@ -20,6 +20,7 @@ import ActionMenuButton from '@/common/components/buttons/ActionMenuButton.vue';
 import TextEditor from '@/common/components/editor/TextEditor.vue';
 import TextEditorViewer from '@/common/components/editor/TextEditorViewer.vue';
 import ErrorHandler from '@/common/composables/error/errorHandler';
+import { useTimezoneDate } from '@/common/composables/timezone-date';
 
 import { useCommentStore } from '@/services/ops-flow/stores/comment-store';
 import { useTaskDetailPageStore } from '@/services/ops-flow/stores/task-detail-page-store';
@@ -44,6 +45,7 @@ const commentItems = computed<CollapsibleItem<CommentModel>[]>(() => comments.va
     title: comment.created_at,
     data: comment,
 })));
+const { getTimezoneDate } = useTimezoneDate();
 
 /* add comment */
 const addingComment = ref<boolean>(false);
@@ -126,7 +128,9 @@ onBeforeMount(async () => {
             <template #no-styled-title="{data}">
                 <div class="flex w-full gap-1 items-center">
                     <span class="text-paragraph-md font-bold text-blue-900">{{ getAuthor(data) }}</span>
-                    <span class="flex-grow text-paragraph-sm text-gray-400">{{ data.created_at }}</span>
+                    <div class="flex-1 truncate">
+                        <span class="flex-grow text-paragraph-sm text-gray-400">{{ getTimezoneDate(data.created_at) }}</span>
+                    </div>
                     <action-menu-button v-if="getWritePermission(data)"
                                         style-type="tertiary"
                                         size="sm"
