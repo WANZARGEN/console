@@ -51,5 +51,5 @@ jobs:
       - name: Add Pull Request Reviewer
         uses: madrapps/add-reviewers@v1
         with:
-          reviewers: ${{ steps.pick_random_reviwer.outputs.reviewer1 }},${{ steps.pick_random_reviwer.outputs.reviewer2 }}
+          reviewers: ${{ steps.pick_random_reviewer.outputs.reviewer1 }},${{ steps.pick_random_reviewer.outputs.reviewer2 }}
           token: ${{ secrets.GITHUB_TOKEN }}
