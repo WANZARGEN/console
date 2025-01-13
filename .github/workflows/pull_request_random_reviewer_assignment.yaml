@@ -22,16 +22,18 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: pick_random_reviewer
-        id: pick_random_reviwer 
+        id: pick_random_reviewer 
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const group1 = JSON.parse(process.env.GROUP1);
             const group2 = JSON.parse(process.env.GROUP2);
+            console.log('group1:', group1, 'group2:', group2);
             
             const randomReviewer1 = group1[Math.floor(Math.random() * group1.length)];
             const randomReviewer2 = group2[Math.floor(Math.random() * group2.length)];
+            console.log('randomReviewer1:', randomReviewer1, 'randomReviewer2:', randomReviewer2);
             
             const comment = `🎉 @${randomReviewer1} and @${randomReviewer2} have been randomly selected as the reviewers! Please review. 🙏`
             core.setOutput('comment', comment) 
@@ -52,5 +54,5 @@ jobs:
       - name: Add Pull Request Reviewer
         uses: madrapps/add-reviewers@v1
         with:
-          reviewers: ${{ steps.pick_random_reviewer.outputs.reviewer }}
+          reviewers: ${{ steps.pick_random_reviwer.outputs.reviewer1 }},${{ steps.pick_random_reviwer.outputs.reviewer2 }}
           token: ${{ secrets.GITHUB_TOKEN }}
