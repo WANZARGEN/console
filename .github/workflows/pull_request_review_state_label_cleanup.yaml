@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Remove review labels
         uses: actions/github-script@v6
-        with:
+        with: 
           script: |
             const issue_number = context.payload.pull_request.number;
             const owner = context.repo.owner;
