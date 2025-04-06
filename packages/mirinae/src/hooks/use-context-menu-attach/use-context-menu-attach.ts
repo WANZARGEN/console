@@ -44,7 +44,7 @@ export const useContextMenuAttach = <Item extends MenuItem = MenuItem>({
 }: UseContextMenuAttachOptions<Item>): UseContextMenuAttachReturns<Item> => {
     const defaultAttachHandler: MenuAttachHandler<Item> = (inputText, _pageStart, _pageLimit) => {
         const allItems = isRef(menu) ? menu.value ?? [] : menu ?? [];
-        const filtered = inputText ? allItems.filter((item) => getTextHighlightRegex(inputText).test(item.label as string|undefined ?? item.name ?? '')) : allItems;
+        const filtered = allItems.filter((item) => getTextHighlightRegex(inputText).test(item.label as string|undefined ?? item.name ?? ''));
         if (_pageStart === undefined || _pageLimit === undefined) { // do not need to slice items
             return {
                 results: allItems,
