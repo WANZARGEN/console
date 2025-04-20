@@ -11,8 +11,9 @@ function getAbsolutePath(value: string): any {
 }
 const config: StorybookConfig = {
   "stories": [
-    "../../packages/mirinae-react/**/*.mdx",
-    "../../packages/mirinae-react/**/*.stories.@(js|jsx|mjs|ts|tsx)"
+    "../stories/**/*.mdx",
+    "../../../packages/mirinae-react/**/*.mdx",
+    "../../../packages/mirinae-react/**/*.stories.@(js|jsx|mjs|ts|tsx)"
   ],
   "addons": [
     getAbsolutePath('@storybook/addon-essentials'),
