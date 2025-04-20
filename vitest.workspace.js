@@ -5,4 +5,5 @@ export default defineWorkspace([
     './packages/mirinae/vite.config.js',
     './packages/core-lib/vite.config.js',
     './packages/utils/vite.config.js',
+    './apps/mirinae-react-storybook/vite.config.ts',
 ]);

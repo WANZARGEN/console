@@ -1,0 +1,52 @@
+{
+  "name": "mirinae-react-storybook",
+  "version": "1.0.0",
+  "description": "Storybook for Mirinae React Design System",
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build",
+    "chromatic": "chromatic",
+    "test:browser": "vitest --workspace=vitest.workspace.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.6",
+    "@storybook/addon-essentials": "^8.6.12",
+    "@storybook/addon-onboarding": "^8.6.12",
+    "@storybook/blocks": "^8.6.12",
+    "@storybook/experimental-addon-test": "^8.6.12",
+    "@storybook/react": "^8.6.12",
+    "@storybook/react-vite": "^8.6.12",
+    "@storybook/test": "^8.6.12",
+    "@types/node": "^22.14.1",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "@vitejs/plugin-react": "^4.4.1",
+    "@vitejs/plugin-react-swc": "^3.9.0",
+    "@vitest/browser": "^3.1.1",
+    "chromatic": "^10.0.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "eslint-plugin-storybook": "^0.8.0",
+    "playwright": "^1.52.0",
+    "prettier": "^3.2.5",
+    "storybook": "^8.6.12",
+    "tailwindcss": "^4.1.4",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0",
+    "vitest": "^3.1.1",
+    "vitest-browser-react": "^0.1.1"
+  }
+}
