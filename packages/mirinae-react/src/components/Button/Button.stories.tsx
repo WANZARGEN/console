@@ -13,6 +13,16 @@ const meta = {
           "Button 컴포넌트는 사용자 상호작용을 위한 기본적인 버튼입니다.",
       },
     },
+    a11y: {
+      config: {
+        rules: [
+          {
+            id: "button-name",
+            enabled: true,
+          },
+        ],
+      },
+    },
   },
   tags: ["autodocs", "test"],
   argTypes: {
@@ -162,5 +172,39 @@ export const VisualTest: Story = {
   },
   parameters: {
     chromatic: { viewports: [320, 768, 1024] },
+  },
+};
+
+// 접근성 테스트 실패를 위한 케이스
+export const FailingA11y: Story = {
+  args: {
+    "aria-label": "",
+    children: "",
+  },
+  parameters: {
+    a11y: {
+      config: {
+        rules: [
+          {
+            id: "button-name",
+            enabled: true,
+          },
+        ],
+      },
+    },
+  },
+};
+
+// 의도적으로 실패하는 테스트 케이스
+export const FailingTest: Story = {
+  args: {
+    children: "Failing Button",
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole("button");
+
+    // 의도적으로 실패하는 assertion 추가
+    await expect(button).toHaveClass("non-existent-class");
   },
 };

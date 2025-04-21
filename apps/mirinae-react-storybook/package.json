@@ -6,6 +6,8 @@
     "dev": "storybook dev -p 6006",
     "build": "storybook build",
     "chromatic": "chromatic",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage --workspace=vitest.workspace.ts",
     "test:browser": "vitest --workspace=vitest.workspace.ts"
   },
   "keywords": [],
@@ -17,7 +19,10 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.6",
+    "@storybook/addon-a11y": "^8.6.12",
+    "@storybook/addon-coverage": "^1.0.5",
     "@storybook/addon-essentials": "^8.6.12",
+    "@storybook/addon-interactions": "^8.6.12",
     "@storybook/addon-onboarding": "^8.6.12",
     "@storybook/blocks": "^8.6.12",
     "@storybook/experimental-addon-test": "^8.6.12",
@@ -33,6 +38,7 @@
     "@vitejs/plugin-react": "^4.4.1",
     "@vitejs/plugin-react-swc": "^3.9.0",
     "@vitest/browser": "^3.1.1",
+    "@vitest/coverage-v8": "^3.1.1",
     "chromatic": "^10.0.0",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
