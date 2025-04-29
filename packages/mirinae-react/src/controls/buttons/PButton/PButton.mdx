@@ -1,0 +1,133 @@
+import { Meta, Controls, Canvas, Story } from "@storybook/blocks";
+import * as PButtonStories from "./PButton.stories";
+
+<Meta of={PButtonStories} />
+
+# PButton
+
+PButton은 SpaceONE의 기본 버튼 컴포넌트입니다. 다양한 스타일과 크기, 상태를 지원하며 아이콘도 함께 사용할 수 있습니다.
+
+## 특징
+
+- 10가지 스타일 변형 지원 (primary, secondary, tertiary 등)
+- 3가지 크기 옵션 (sm, md, lg)
+- 로딩 상태 표시 기능
+- 아이콘 지원 (왼쪽/오른쪽)
+- 전체 너비 옵션
+- 비활성화 및 읽기 전용 상태 지원
+- 활성화 상태 스타일링
+
+## 사용 예시
+
+### 기본 사용법
+
+가장 기본적인 primary 버튼입니다.
+
+<Canvas>
+  <Story of={PButtonStories.Primary} />
+</Canvas>
+
+### 스타일 변형
+
+다양한 상황에 맞는 스타일을 제공합니다.
+
+<Canvas>
+  <Story of={PButtonStories.Secondary} />
+  <Story of={PButtonStories.Tertiary} />
+</Canvas>
+
+### 크기 옵션
+
+세 가지 크기를 지원합니다.
+
+<Canvas>
+  <Story of={PButtonStories.Small} />
+  <Story of={PButtonStories.Medium} />
+  <Story of={PButtonStories.Large} />
+</Canvas>
+
+### 상태
+
+로딩, 비활성화 등 다양한 상태를 표현할 수 있습니다.
+
+<Canvas>
+  <Story of={PButtonStories.Loading} />
+  <Story of={PButtonStories.Disabled} />
+</Canvas>
+
+### 아이콘 사용
+
+버튼 양쪽에 아이콘을 배치할 수 있습니다.
+
+<Canvas>
+  <Story of={PButtonStories.WithIcons} />
+</Canvas>
+
+### 전체 너비
+
+block 속성을 사용하여 전체 너비를 차지하는 버튼을 만들 수 있습니다.
+
+<Canvas>
+  <Story of={PButtonStories.Block} />
+</Canvas>
+
+### 활성화 상태
+
+active 속성을 사용하여 활성화된 상태의 버튼을 만들 수 있습니다.
+
+<Canvas>
+  <Story of={PButtonStories.Active} />
+</Canvas>
+
+### 링크 버튼
+
+href 속성을 사용하여 링크로 동작하는 버튼을 만들 수 있습니다.
+
+<Canvas>
+  <Story of={PButtonStories.AsLink} />
+</Canvas>
+
+### 아이콘만 있는 버튼
+
+아이콘만 있는 버튼을 만들 수 있습니다.
+
+<Canvas>
+  <Story of={PButtonStories.IconOnly} />
+</Canvas>
+
+### 버튼 그룹
+
+여러 버튼을 그룹으로 사용할 수 있습니다.
+
+<Canvas>
+  <Story of={PButtonStories.ButtonGroup} />
+</Canvas>
+
+## Props
+
+PButton 컴포넌트에서 사용 가능한 모든 속성들입니다.
+
+<Controls />
+
+## 사용 시 주의사항
+
+1. **아이콘 사용**
+
+   - iconLeft와 iconRight props는 Font Awesome 클래스명을 받습니다.
+   - 로딩 상태일 때는 아이콘이 표시되지 않습니다.
+
+2. **스타일 우선순위**
+
+   - disabled, loading, readonly 상태는 다른 스타일을 덮어씁니다.
+   - active 상태는 기본 스타일에 투명도만 추가합니다.
+
+3. **크기별 최소 너비**
+
+   - sm: 3.25rem (52px)
+   - md: 6rem (96px)
+   - lg: 7.5rem (120px)
+
+4. **접근성**
+   - 비활성화 상태에서는 클릭 이벤트가 발생하지 않습니다.
+   - 로딩 상태에서는 자동으로 비활성화됩니다.
+   - 스크린 리더를 위한 적절한 상태 정보가 제공됩니다.
